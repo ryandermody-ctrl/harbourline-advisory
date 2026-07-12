@@ -9,8 +9,6 @@
   <title>Harbour Line Advisory</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="access.css">
-  <script src="script.js" defer></script>
 </head>
 <body>
   <main class="page-shell">
@@ -34,8 +32,8 @@
       <p class="subhead">Information is shared selectively with invited participants.</p>
 
       <div class="actions">
-        <button class="primary-action" id="brief-access" type="button" aria-describedby="typeform-note">Continue</button>
-        <p id="typeform-note" class="typeform-note">Access code required.</p>
+        <a class="primary-action" href="https://script.google.com/macros/s/AKfycbxmjJKL8TU71GAS5rvYFQOzCng3Hs8PxWNHsowkTD5Oq_1MI9GMk_4heNbk0fpYg5RN4w/exec" rel="nofollow">Continue</a>
+        <p class="typeform-note">Email approval or access code required.</p>
       </div>
     </section>
 
@@ -44,18 +42,5 @@
       <span>By invitation.</span>
     </footer>
   </main>
-
-  <dialog class="access-dialog" id="access-dialog" aria-labelledby="access-title">
-    <form class="access-form" id="access-form" method="dialog">
-      <button class="dialog-close" id="dialog-close" type="button" aria-label="Close">×</button>
-      <p class="dialog-eyebrow">Private access</p>
-      <h2 id="access-title">Enter your access code</h2>
-      <p class="dialog-copy">Use the code provided to you.</p>
-      <label for="access-code">Access code</label>
-      <input id="access-code" name="access-code" type="password" autocomplete="off" required>
-      <p class="access-error" id="access-error" role="alert" aria-live="polite"></p>
-      <button class="primary-action dialog-submit" type="submit">Continue</button>
-    </form>
-  </dialog>
 </body>
 </html>
