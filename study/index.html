@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A private international study of how capital decisions are tested against operating reality.">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="theme-color" content="#11212d">
+  <title>The Operating Reality Study | Harbour Line Advisory</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      --ink: #11212d;
+      --navy: #1b2733;
+      --teal: #0e6a6a;
+      --aqua: #8bc5bf;
+      --sea: #dcebea;
+      --mist: #f3f7f7;
+      --paper: #fbfcfc;
+      --white: #ffffff;
+      --slate: #52616f;
+      --line: rgba(17, 33, 45, .16);
+      --gold: #bd9351;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Arial, Helvetica, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    ::selection { color: var(--white); background: var(--teal); }
+
+    .shell {
+      width: min(100%, 1500px);
+      margin: 0 auto;
+      padding: 28px clamp(22px, 6vw, 96px) 32px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 8px 0 19px;
+      border-bottom: 3px solid var(--ink);
+    }
+
+    .brand {
+      color: inherit;
+      text-decoration: none;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.5rem, 2.7vw, 2.65rem);
+      font-weight: 700;
+      letter-spacing: -.04em;
+    }
+
+    .edition {
+      color: var(--teal);
+      font-size: .73rem;
+      font-weight: 700;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      text-align: right;
+    }
+
+    .tideline {
+      height: 31px;
+      overflow: hidden;
+    }
+
+    .tideline svg { width: 100%; height: 100%; display: block; }
+    .tideline path { fill: none; stroke-linecap: round; }
+    .tideline .one { stroke: var(--aqua); stroke-width: 2.2; }
+    .tideline .two { stroke: #d7e0e2; stroke-width: 1.5; }
+
+    .hero {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(270px, .55fr);
+      gap: clamp(38px, 8vw, 120px);
+      align-items: end;
+      padding: clamp(68px, 12vh, 135px) 0 clamp(70px, 10vh, 115px);
+    }
+
+    .kicker,
+    .section-kicker {
+      margin: 0 0 18px;
+      color: var(--teal);
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    blockquote {
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 400;
+      letter-spacing: -.045em;
+    }
+
+    h1 {
+      max-width: 960px;
+      margin: 0;
+      font-size: clamp(3.8rem, 8.7vw, 9.1rem);
+      line-height: .91;
+      text-wrap: balance;
+    }
+
+    .accent { color: var(--teal); }
+
+    .hero-aside {
+      border-top: 1px solid var(--line);
+      padding-top: 22px;
+    }
+
+    .hero-aside p {
+      margin: 0;
+      color: var(--slate);
+      font-size: clamp(1rem, 1.35vw, 1.25rem);
+      line-height: 1.58;
+    }
+
+    .statline {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .stat {
+      min-height: 132px;
+      padding: 26px clamp(18px, 3vw, 38px);
+      border-right: 1px solid var(--line);
+    }
+
+    .stat:last-child { border-right: 0; }
+
+    .stat strong {
+      display: block;
+      margin-bottom: 7px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.2rem, 4vw, 4.1rem);
+      font-weight: 400;
+      letter-spacing: -.05em;
+    }
+
+    .stat span {
+      color: var(--slate);
+      font-size: .82rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .section {
+      padding: clamp(74px, 11vh, 130px) 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: minmax(260px, .58fr) minmax(0, 1.05fr);
+      gap: clamp(46px, 9vw, 130px);
+    }
+
+    h2 {
+      max-width: 560px;
+      margin: 0;
+      font-size: clamp(2.9rem, 6vw, 6.3rem);
+      line-height: .97;
+    }
+
+    .body-copy {
+      max-width: 750px;
+      color: var(--slate);
+      font-size: clamp(1.04rem, 1.45vw, 1.3rem);
+      line-height: 1.68;
+    }
+
+    .body-copy p:first-child { margin-top: 0; }
+
+    blockquote {
+      margin: 42px 0 0;
+      padding: 0 0 0 24px;
+      border-left: 4px solid var(--gold);
+      color: var(--ink);
+      font-size: clamp(1.6rem, 3vw, 2.8rem);
+      line-height: 1.15;
+    }
+
+    .questions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+
+    .question {
+      min-height: 210px;
+      padding: clamp(26px, 4vw, 46px);
+      background: var(--white);
+    }
+
+    .question-number {
+      color: var(--teal);
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .question h3 {
+      margin: 35px 0 0;
+      font-size: clamp(1.55rem, 2.5vw, 2.55rem);
+      line-height: 1.08;
+    }
+
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      margin-top: 45px;
+    }
+
+    .audience-card {
+      position: relative;
+      min-height: 245px;
+      padding: 30px;
+      overflow: hidden;
+      color: var(--white);
+      background: var(--ink);
+    }
+
+    .audience-card::after {
+      content: "";
+      position: absolute;
+      width: 170px;
+      height: 170px;
+      right: -74px;
+      bottom: -78px;
+      border: 1px solid rgba(139, 197, 191, .45);
+      border-radius: 50%;
+      box-shadow: 0 0 0 28px rgba(139, 197, 191, .06), 0 0 0 56px rgba(139, 197, 191, .04);
+    }
+
+    .audience-card span {
+      color: var(--aqua);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .audience-card h3 {
+      max-width: 260px;
+      margin: 52px 0 0;
+      font-size: clamp(1.7rem, 2.7vw, 2.7rem);
+      line-height: 1.05;
+    }
+
+    .privacy-panel {
+      display: grid;
+      grid-template-columns: .7fr 1fr;
+      gap: clamp(34px, 8vw, 100px);
+      align-items: center;
+      padding: clamp(38px, 7vw, 76px);
+      color: var(--white);
+      background: var(--teal);
+    }
+
+    .privacy-panel h2 { font-size: clamp(2.7rem, 5.5vw, 5.6rem); }
+
+    .privacy-panel p {
+      margin: 0;
+      color: rgba(255, 255, 255, .86);
+      font-size: clamp(1.02rem, 1.45vw, 1.27rem);
+      line-height: 1.65;
+    }
+
+    .cta {
+      text-align: center;
+      padding: clamp(85px, 14vh, 150px) 0 clamp(75px, 12vh, 125px);
+    }
+
+    .cta h2 {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .cta p {
+      max-width: 660px;
+      margin: 30px auto 0;
+      color: var(--slate);
+      font-size: 1.08rem;
+      line-height: 1.6;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 60px;
+      margin-top: 38px;
+      padding: 0 32px;
+      border: 1px solid var(--teal);
+      border-radius: 2px;
+      color: var(--white);
+      background: var(--teal);
+      text-decoration: none;
+      font-weight: 700;
+      transition: transform 160ms ease, background-color 160ms ease;
+    }
+
+    .button:hover { transform: translateY(-2px); background: var(--ink); border-color: var(--ink); }
+    .button:focus-visible { outline: 3px solid var(--aqua); outline-offset: 4px; }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
+      color: var(--slate);
+      font-size: .8rem;
+    }
+
+    @media (max-width: 840px) {
+      .topbar { align-items: flex-start; flex-direction: column; }
+      .edition { text-align: left; }
+      .hero, .split, .privacy-panel { grid-template-columns: 1fr; }
+      .hero { align-items: start; }
+      .hero-aside { max-width: 620px; }
+      .statline { grid-template-columns: 1fr; }
+      .stat { border-right: 0; border-bottom: 1px solid var(--line); }
+      .stat:last-child { border-bottom: 0; }
+      .questions, .audience-grid { grid-template-columns: 1fr; }
+      .question { min-height: 170px; }
+    }
+
+    @media (max-width: 520px) {
+      .shell { padding-left: 20px; padding-right: 20px; }
+      h1 { font-size: clamp(3.4rem, 18vw, 5.2rem); }
+      .audience-card { min-height: 210px; }
+      footer { flex-direction: column; }
+    }
+
+    @media print {
+      .shell { width: 100%; padding: 18px 26px; }
+      .hero { padding: 48px 0; }
+      .section { padding: 48px 0; }
+      .button { color: var(--ink); background: transparent; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="https://harbourlineadvisory.com">Harbour Line Advisory</a>
+      <div class="edition">International Operating Reality Study · 2026</div>
+    </header>
+
+    <div class="tideline" aria-hidden="true">
+      <svg viewBox="0 0 1200 34" preserveAspectRatio="none">
+        <path class="one" d="M0 12 C30 2 60 2 90 12 S150 22 180 12 S240 2 270 12 S330 22 360 12 S420 2 450 12 S510 22 540 12 S600 2 630 12 S690 22 720 12 S780 2 810 12 S870 22 900 12 S960 2 990 12 S1050 22 1080 12 S1140 2 1200 12" />
+        <path class="two" d="M0 23 C30 13 60 13 90 23 S150 33 180 23 S240 13 270 23 S330 33 360 23 S420 13 450 23 S510 33 540 23 S600 13 630 23 S690 33 720 23 S780 13 810 23 S870 33 900 23 S960 13 990 23 S1050 22 1080 23 S1140 13 1200 23" />
+      </svg>
+    </div>
+
+    <section class="hero">
+      <div>
+        <p class="kicker">A private international study</p>
+        <h1>The investment case has been tested. <span class="accent">Has the operation?</span></h1>
+      </div>
+      <aside class="hero-aside">
+        <p>Harbour Line is speaking with a small group of investors, lenders, owners and senior operators about the gap between a capital decision that works on paper and an asset that works in practice.</p>
+      </aside>
+    </section>
+
+    <section class="statline" aria-label="Study details">
+      <div class="stat"><strong>7</strong><span>Focused questions</span></div>
+      <div class="stat"><strong>5</strong><span>Minutes to complete</span></div>
+      <div class="stat"><strong>4</strong><span>International corridors</span></div>
+    </section>
+
+    <section class="section split">
+      <div>
+        <p class="section-kicker">Why this study exists</p>
+        <h2>Capital is reviewed in rooms. Operations fail in the field.</h2>
+      </div>
+      <div class="body-copy">
+        <p>Transactions, refinancings and major capital programmes are examined by capable legal, financial and technical teams. Yet the most expensive surprises often sit between those workstreams: maintenance that does not match the model, contracts that do not match the operation, fragile succession, regulatory exposure, or a throughput assumption nobody has reconciled against recent performance.</p>
+        <p>This study is testing whether owners and capital providers need a short, independent operating read before committing further capital, or when an existing asset begins to drift away from the original case.</p>
+        <blockquote>We are trying to find out where operating reality enters the investment decision, who is trusted to bring it in, and what that judgement is worth.</blockquote>
+      </div>
+    </section>
+
+    <section class="section">
+      <p class="section-kicker">What the diagnostic examines</p>
+      <div class="questions">
+        <article class="question">
+          <span class="question-number">01 · Cash and runway</span>
+          <h3>Have real bills and covenant tests been reconciled against the model?</h3>
+        </article>
+        <article class="question">
+          <span class="question-number">02 · Ground truth</span>
+          <h3>Has an independent operator recently walked the asset and spoken to the people running it?</h3>
+        </article>
+        <article class="question">
+          <span class="question-number">03 · Model versus operation</span>
+          <h3>Do throughput and utilisation assumptions match recent operating performance?</h3>
+        </article>
+        <article class="question">
+          <span class="question-number">04 · Decision governance</span>
+          <h3>Are the key risks, contracts, conditions and decisions brought together in one accountable view?</h3>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="split">
+        <div>
+          <p class="section-kicker">Who should take part</p>
+          <h2>People close enough to a decision to know what being wrong costs.</h2>
+        </div>
+        <div class="body-copy">
+          <p>The diagnostic is designed for a current or recent physical-asset decision. It is most useful when answered with a particular investment, refinancing, acquisition, concession, terminal, fleet, plant, transport operation or infrastructure platform in mind.</p>
+        </div>
+      </div>
+
+      <div class="audience-grid">
+        <article class="audience-card"><span>Capital</span><h3>Funds, portfolio managers and investment committees</h3></article>
+        <article class="audience-card"><span>Credit</span><h3>Banks, private lenders and restructuring teams</h3></article>
+        <article class="audience-card"><span>Ownership</span><h3>Boards, asset owners and operating executives</h3></article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="privacy-panel">
+        <h2>Private by design.</h2>
+        <p>Participation is invitation-only. Access is approved personally. The study is being used to shape a focused advisory product, understand the circumstances in which it is useful, and establish sensible scope and pricing. Responses are reviewed privately and are not published with names or organisations attached.</p>
+      </div>
+    </section>
+
+    <section class="cta">
+      <p class="section-kicker">Invitation required</p>
+      <h2>Answer it against something real.</h2>
+      <p>The diagnostic takes about five minutes. Request private access, and Ryan will review the request before issuing a code.</p>
+      <a class="button" id="participate" href="https://script.google.com/macros/s/AKfycbxmjJKL8TU71GAS5rvYFQOzCng3Hs8PxWNHsowkTD5Oq_1MI9GMk_4heNbk0fpYg5RN4w/exec" rel="nofollow">Take part privately</a>
+    </section>
+
+    <footer>
+      <span>Harbour Line Advisory</span>
+      <span>Private international market study · 2026</span>
+    </footer>
+  </main>
+
+  <script>
+    (() => {
+      const tracker = 'https://script.google.com/macros/s/AKfycbxmjJKL8TU71GAS5rvYFQOzCng3Hs8PxWNHsowkTD5Oq_1MI9GMk_4heNbk0fpYg5RN4w/exec';
+      const params = new URLSearchParams(window.location.search);
+      const referralId = (params.get('r') || '').replace(/[^a-zA-Z0-9-]/g, '').slice(0, 80);
+      const button = document.getElementById('participate');
+
+      const ping = (action, extra = {}) => {
+        if (!referralId) return;
+        const query = new URLSearchParams({ action, id: referralId, ...extra });
+        fetch(`${tracker}?${query.toString()}`, { mode: 'no-cors', keepalive: true }).catch(() => {});
+      };
+
+      if (referralId) {
+        button.href = `${tracker}?r=${encodeURIComponent(referralId)}`;
+        ping('track-open', { page: 'study' });
+      }
+
+      button.addEventListener('click', () => ping('track-click', { page: 'study' }));
+    })();
+  </script>
+</body>
+</html>
