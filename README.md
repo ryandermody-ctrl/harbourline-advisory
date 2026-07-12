@@ -6,29 +6,36 @@ Static public pages for harbourlineadvisory.com.
 
 GitHub is the source repository. Cloudflare is the public deployment and domain layer. Changes committed to `main` are detected by Cloudflare and published to the live site.
 
-The Cloudflare dashboard, DNS records, build settings and access logs are not stored in this repository. They should be reviewed and recorded separately before the project is reopened.
+## Current platform architecture
+
+The active research path is deliberately simple:
+
+1. `harbourlineadvisory.com/study/`
+2. Harbour Line Model Coherence Study in Typeform
+3. Typeform's native Google Sheets integration
+4. `HLA Demand Tracker (LIVE)` for analysis and outreach records
+
+Live Typeform:
+
+`https://form.typeform.com/to/Jh4G63Se`
+
+The participant path does not use an access code, Apps Script approval, a collaborator console or a custom response relay.
 
 ## Current public scope
 
-- `index.html` — private holding page and existing-participant access
-- `study/` — unlisted market-research brief; new responses are paused
-- `send/` — closed holding page while the invitation system is rebuilt
+- `index.html` — Harbour Line landing page
+- `study/` — Model Coherence Study explanation and direct Typeform link
+- `send/` — retirement notice for the former collaborator console
 - `styles.css` — public visual system
 - `favicon.svg` — site icon
 - `_headers` and `robots.txt` — browser and crawler controls
 - `CNAME` — custom-domain record retained for compatibility
 
-## Temporary deployment exception
+## Retired access system
 
-`access-system/` contains the staged security revision for the existing Google Apps Script deployment. It remains here only so the owner can copy the revised files into Apps Script and publish a new version.
+`access-system/` is retained only as a historical technical record. It is not part of the active participant journey and should not be deployed as the current Harbour Line study architecture.
 
-While this exception remains:
-
-- new study responses are paused
-- the collaborator invitation tool is closed
-- the source must not contain access codes, administrator tokens or participant records
-
-After the revised deployment passes the recorded access tests, delete `access-system/` from this public repository.
+The files may contain superseded process language and old form references. The governing source for the live study is the current Typeform URL above and the current documents in Google Drive.
 
 ## Private operational material
 
@@ -40,8 +47,8 @@ The public repository must not contain:
 - personal contact lists
 - confidential client, employer or transaction information
 
-Operational records, the governing documents and deployment runbook are maintained in restricted Google Drive folders.
+Operational records, research standards and release notes are maintained in restricted Google Drive files.
 
 ## Privacy limitation
 
-The pages are unlisted and instructed not to appear in search results. They are not secret: anyone who has an exact page address may open it. Access-controlled material must remain behind the separate private service.
+The public pages are instructed not to appear in search results, but anyone with an exact address may open them. The Typeform does not ask for names, organisations or confidential transaction information. Invitation records held separately may still identify who received a link, so the pilot is confidential rather than guaranteed anonymous.
