@@ -16,102 +16,39 @@
     .tideline{height:31px;overflow:hidden}.tideline svg{width:100%;height:100%;display:block}.tideline path{fill:none;stroke-linecap:round}.tideline .one{stroke:var(--aqua);stroke-width:2.2}.tideline .two{stroke:#d7e0e2;stroke-width:1.5}
     .hero{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(270px,.55fr);gap:clamp(38px,8vw,118px);align-items:end;padding:clamp(68px,12vh,132px) 0 clamp(70px,10vh,112px)}.kicker,.section-kicker{margin:0 0 18px;color:var(--teal);font-size:.75rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase}h1,h2,h3{font-family:Georgia,"Times New Roman",serif;font-weight:400;letter-spacing:-.045em}h1{max-width:970px;margin:0;font-size:clamp(3.8rem,8.7vw,9rem);line-height:.91;text-wrap:balance}.accent{color:var(--teal)}.hero-aside{border-top:1px solid var(--line);padding-top:22px}.hero-aside p{margin:0;color:var(--slate);font-size:clamp(1rem,1.35vw,1.25rem);line-height:1.62}
     .facts{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.fact{min-height:126px;padding:26px clamp(18px,3vw,38px);border-right:1px solid var(--line)}.fact:last-child{border-right:0}.fact strong{display:block;margin-bottom:8px;font:400 clamp(1.65rem,3vw,3rem)/1.05 Georgia,serif;letter-spacing:-.04em}.fact span{color:var(--slate);font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
-    .section{padding:clamp(72px,11vh,126px) 0;border-bottom:1px solid var(--line)}.split{display:grid;grid-template-columns:minmax(260px,.62fr) minmax(0,1.05fr);gap:clamp(46px,9vw,128px)}h2{max-width:590px;margin:0;font-size:clamp(2.8rem,5.8vw,6.1rem);line-height:.98}.body{max-width:780px;color:var(--slate);font-size:clamp(1.03rem,1.4vw,1.27rem);line-height:1.7}.body p:first-child{margin-top:0}.body strong{color:var(--ink)}
+    .section{padding:clamp(72px,11vh,126px) 0;border-bottom:1px solid var(--line)}.split{display:grid;grid-template-columns:minmax(260px,.62fr) minmax(0,1.05fr);gap:clamp(46px,9vw,128px)}h2{max-width:620px;margin:0;font-size:clamp(2.8rem,5.8vw,6.1rem);line-height:.98}.body{max-width:780px;color:var(--slate);font-size:clamp(1.03rem,1.4vw,1.27rem);line-height:1.7}.body p:first-child{margin-top:0}.body strong{color:var(--ink)}
     .questions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:44px}.question{min-height:205px;padding:clamp(26px,4vw,44px);background:var(--white)}.question span{color:var(--teal);font-size:.74rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}.question h3{margin:34px 0 0;font-size:clamp(1.5rem,2.4vw,2.45rem);line-height:1.1}
     .audience{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:44px}.card{min-height:230px;padding:30px;color:var(--white);background:var(--ink)}.card span{color:var(--aqua);font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}.card h3{margin:50px 0 0;font-size:clamp(1.65rem,2.5vw,2.55rem);line-height:1.07}
     .notice{display:grid;grid-template-columns:.7fr 1fr;gap:clamp(34px,8vw,100px);align-items:center;padding:clamp(38px,7vw,74px);background:var(--mist)}.notice h2{font-size:clamp(2.55rem,5.2vw,5.3rem)}.notice p{margin:0;color:var(--slate);font-size:clamp(1.02rem,1.4vw,1.24rem);line-height:1.68}
-    .cta{text-align:center;padding:clamp(82px,13vh,142px) 0 clamp(74px,11vh,120px)}.cta h2{max-width:900px;margin:0 auto}.cta p{max-width:690px;margin:30px auto 0;color:var(--slate);font-size:1.08rem;line-height:1.65}.status{display:inline-block;margin-top:34px;padding:14px 18px;border:1px solid var(--line);color:var(--ink);background:var(--white);font-weight:700}
+    .cta{text-align:center;padding:clamp(82px,13vh,142px) 0 clamp(74px,11vh,120px)}.cta h2{max-width:900px;margin:0 auto}.cta p{max-width:690px;margin:30px auto 0;color:var(--slate);font-size:1.08rem;line-height:1.65}.button{display:inline-flex;align-items:center;justify-content:center;min-height:58px;margin-top:36px;padding:0 30px;border:1px solid var(--teal);color:var(--white);background:var(--teal);font-weight:700;text-decoration:none}.button:hover{background:var(--ink);border-color:var(--ink)}
     footer{display:flex;justify-content:space-between;gap:24px;padding-top:22px;border-top:1px solid var(--line);color:var(--slate);font-size:.8rem}
     @media(max-width:840px){.topbar{align-items:flex-start;flex-direction:column}.edition{text-align:left}.hero,.split,.notice{grid-template-columns:1fr}.facts,.questions,.audience{grid-template-columns:1fr}.fact{border-right:0;border-bottom:1px solid var(--line)}.fact:last-child{border-bottom:0}.question{min-height:165px}}@media(max-width:520px){.shell{padding-left:20px;padding-right:20px}h1{font-size:clamp(3.4rem,18vw,5.2rem)}footer{flex-direction:column}}
   </style>
 </head>
 <body>
   <main class="shell">
-    <header class="topbar">
-      <a class="brand" href="https://harbourlineadvisory.com">Harbour Line Advisory</a>
-      <div class="edition">Operating Reality Study · 2026</div>
-    </header>
+    <header class="topbar"><a class="brand" href="https://harbourlineadvisory.com">Harbour Line Advisory</a><div class="edition">Operating Reality Study · 2026</div></header>
+    <div class="tideline" aria-hidden="true"><svg viewBox="0 0 1200 34" preserveAspectRatio="none"><path class="one" d="M0 12 C30 2 60 2 90 12 S150 22 180 12 S240 2 270 12 S330 22 360 12 S420 2 450 12 S510 22 540 12 S600 2 630 12 S690 22 720 12 S780 2 810 12 S870 22 900 12 S960 2 990 12 S1050 22 1080 12 S1140 2 1200 12"/><path class="two" d="M0 23 C30 13 60 13 90 23 S150 33 180 23 S240 13 270 23 S330 33 360 23 S420 13 450 23 S510 33 540 23 S600 13 630 23 S690 33 720 23 S780 13 810 23 S870 33 900 23 S960 13 990 23 S1050 22 1080 23 S1140 13 1200 23"/></svg></div>
 
-    <div class="tideline" aria-hidden="true">
-      <svg viewBox="0 0 1200 34" preserveAspectRatio="none">
-        <path class="one" d="M0 12 C30 2 60 2 90 12 S150 22 180 12 S240 2 270 12 S330 22 360 12 S420 2 450 12 S510 22 540 12 S600 2 630 12 S690 22 720 12 S780 2 810 12 S870 22 900 12 S960 2 990 12 S1050 22 1080 12 S1140 2 1200 12" />
-        <path class="two" d="M0 23 C30 13 60 13 90 23 S150 33 180 23 S240 13 270 23 S330 33 360 23 S420 13 450 23 S510 33 540 23 S600 13 630 23 S690 33 720 23 S780 13 810 23 S870 33 900 23 S960 13 990 23 S1050 22 1080 23 S1140 13 1200 23" />
-      </svg>
-    </div>
+    <section class="hero"><div><p class="kicker">Private market research</p><h1>The investment case has been tested. <span class="accent">Has the operation?</span></h1></div><aside class="hero-aside"><p>Harbour Line is studying how lenders, investors and boards test the operating assumptions behind decisions involving physical assets.</p></aside></section>
 
-    <section class="hero">
-      <div>
-        <p class="kicker">Private market research</p>
-        <h1>The investment case has been tested. <span class="accent">Has the operation?</span></h1>
-      </div>
-      <aside class="hero-aside">
-        <p>Harbour Line is studying how lenders, investors and boards test the operating assumptions behind decisions involving physical assets.</p>
-      </aside>
-    </section>
+    <section class="facts" aria-label="Study parameters"><div class="fact"><strong>One decision</strong><span>Current or recent</span></div><div class="fact"><strong>Senior participants</strong><span>Close to the decision</span></div><div class="fact"><strong>Private responses</strong><span>No publication by name</span></div></section>
 
-    <section class="facts" aria-label="Study parameters">
-      <div class="fact"><strong>One decision</strong><span>Current or recent</span></div>
-      <div class="fact"><strong>Senior participants</strong><span>Close to the decision</span></div>
-      <div class="fact"><strong>Private responses</strong><span>No publication by name</span></div>
-    </section>
+    <section class="section split"><div><p class="section-kicker">What we are trying to learn</p><h2>How operating judgement enters a capital decision.</h2></div><div class="body"><p>Financial, legal and technical reviews do not always reconcile the investment case with recent operating performance, maintenance demands, contracts, staffing and regulatory conditions.</p><p>The study asks what is handled internally, when outside judgement is useful, who appoints that person and what the work must prove before a committee or board will rely on it.</p><p><strong>It is market research. Participants are not asked to disclose confidential transaction, customer, employee or asset information.</strong></p></div></section>
 
-    <section class="section split">
-      <div>
-        <p class="section-kicker">What we are trying to learn</p>
-        <h2>How operating judgement enters a capital decision.</h2>
-      </div>
-      <div class="body">
-        <p>Financial, legal and technical reviews do not always reconcile the investment case with recent operating performance, maintenance demands, contracts, staffing and regulatory conditions.</p>
-        <p>The study asks what is handled internally, when outside judgement is useful, who appoints that person and what the work must prove before a committee or board will rely on it.</p>
-        <p><strong>It is market research. Participants are not asked to disclose confidential transaction, customer, employee or asset information.</strong></p>
-      </div>
-    </section>
+    <section class="section"><p class="section-kicker">The four areas</p><div class="questions"><article class="question"><span>01 · Current practice</span><h3>How is operating assurance handled now?</h3></article><article class="question"><span>02 · External judgement</span><h3>When is an independent operator useful?</h3></article><article class="question"><span>03 · Reliance</span><h3>What must the work prove before a decision-maker will use it?</h3></article><article class="question"><span>04 · Buying process</span><h3>Who appoints, approves and pays for the work?</h3></article></div></section>
 
-    <section class="section">
-      <p class="section-kicker">The four areas</p>
-      <div class="questions">
-        <article class="question"><span>01 · Current practice</span><h3>How is operating assurance handled now?</h3></article>
-        <article class="question"><span>02 · External judgement</span><h3>When is an independent operator useful?</h3></article>
-        <article class="question"><span>03 · Reliance</span><h3>What must the work prove before a decision-maker will use it?</h3></article>
-        <article class="question"><span>04 · Buying process</span><h3>Who appoints, approves and pays for the work?</h3></article>
-      </div>
-    </section>
+    <section class="section"><div class="split"><div><p class="section-kicker">Who the study is for</p><h2>People close enough to a decision to know what being wrong costs.</h2></div><div class="body"><p>The most useful participants have recently made, reviewed or financed a decision involving a port, terminal, vessel, fleet, plant, transport network or other operating asset.</p></div></div><div class="audience"><article class="card"><span>Credit</span><h3>Lenders and special-situations teams</h3></article><article class="card"><span>Capital</span><h3>Infrastructure investors and portfolio teams</h3></article><article class="card"><span>Governance</span><h3>Boards and owners without sector operators in-house</h3></article></div></section>
 
-    <section class="section">
-      <div class="split">
-        <div>
-          <p class="section-kicker">Who the study is for</p>
-          <h2>People carrying operating risk without a full internal operating bench.</h2>
-        </div>
-        <div class="body">
-          <p>The most useful participants have recently made, reviewed or financed a decision involving a port, terminal, vessel, fleet, plant, transport network or other operating asset.</p>
-        </div>
-      </div>
-      <div class="audience">
-        <article class="card"><span>Credit</span><h3>Lenders and special-situations teams</h3></article>
-        <article class="card"><span>Capital</span><h3>Infrastructure investors and portfolio teams</h3></article>
-        <article class="card"><span>Governance</span><h3>Boards and owners without sector operators in-house</h3></article>
-      </div>
-    </section>
+    <section class="section"><div class="notice"><h2>Private by design.</h2><p>Participation is by invitation. Contact details are used only to manage access, record the source of an introduction and arrange relevant follow-up. Responses are reviewed privately and are not published with names or organisations attached. Participants may ask for their information to be corrected or deleted.</p></div></section>
 
-    <section class="section">
-      <div class="notice">
-        <h2>How information is handled.</h2>
-        <p>Participation is by invitation. Contact details are used only to manage access and follow-up. Responses are reviewed privately and are not published with names or organisations attached. Participants may ask for their information to be corrected or deleted.</p>
-      </div>
-    </section>
+    <section class="cta"><p class="section-kicker">Invitation required</p><h2>Answer it against something real.</h2><p>The diagnostic takes about five minutes. Request private access and Ryan will review the request before issuing a code.</p><a class="button" id="participate" href="https://script.google.com/macros/s/AKfycbxmjJKL8TU71GAS5rvYFQOzCng3Hs8PxWNHsowkTD5Oq_1MI9GMk_4heNbk0fpYg5RN4w/exec" rel="nofollow noreferrer">Take part privately</a></section>
 
-    <section class="cta">
-      <p class="section-kicker">Study revision in progress</p>
-      <h2>New responses are temporarily paused.</h2>
-      <p>The questionnaire is being revised following an independent red-team review. Existing participants may continue through the private access page. New invitations will reopen after the research instrument and data controls have been tested.</p>
-      <span class="status">Invitation intake paused</span>
-    </section>
-
-    <footer>
-      <span>Harbour Line Advisory</span>
-      <span>Private market research · 2026</span>
-    </footer>
+    <footer><span>Harbour Line Advisory</span><span>Private market research · 2026</span></footer>
   </main>
+
+  <script>
+    (()=>{const tracker='https://script.google.com/macros/s/AKfycbxmjJKL8TU71GAS5rvYFQOzCng3Hs8PxWNHsowkTD5Oq_1MI9GMk_4heNbk0fpYg5RN4w/exec';const params=new URLSearchParams(location.search);const id=(params.get('r')||'').replace(/[^a-zA-Z0-9-]/g,'').slice(0,80);const button=document.getElementById('participate');if(!id)return;button.href=tracker+'?r='+encodeURIComponent(id);fetch(tracker+'?action=track-open&id='+encodeURIComponent(id),{mode:'no-cors',keepalive:true}).catch(()=>{});button.addEventListener('click',()=>fetch(tracker+'?action=track-click&id='+encodeURIComponent(id),{mode:'no-cors',keepalive:true}).catch(()=>{}));})();
+  </script>
 </body>
 </html>
