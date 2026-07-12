@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <base target="_top">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Private access | Harbour Line Advisory</title>
+  <style>
+    :root {
+      --navy: #1b2733;
+      --teal: #0e6a6a;
+      --soft: #7fb3b3;
+      --slate: #52616f;
+      --mist: #f2f5f7;
+      --line: #d8dee4;
+      --paper: #fbfcfc;
+      --white: #fff;
+      --error: #8f2d2d;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--navy);
+      background: var(--paper);
+      font-family: Arial, Helvetica, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .shell {
+      width: min(100%, 1120px);
+      min-height: 100svh;
+      margin: 0 auto;
+      padding: clamp(28px, 5vw, 64px) clamp(22px, 6vw, 84px);
+      display: flex;
+      flex-direction: column;
+    }
+    .brand {
+      color: inherit;
+      text-decoration: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 28px;
+      padding-bottom: 18px;
+      border-bottom: 3px solid var(--navy);
+    }
+    .brand-name {
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 700;
+      font-size: clamp(1.6rem, 3vw, 2.5rem);
+      letter-spacing: -.035em;
+    }
+    .brand-note {
+      color: var(--teal);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: .72rem;
+      font-weight: 700;
+      text-align: right;
+    }
+    .wave {
+      height: 28px;
+      border-top: 2px solid var(--soft);
+      border-bottom: 1px solid var(--line);
+      opacity: .65;
+      transform: skewY(-.55deg);
+      margin-top: 10px;
+    }
+    .content {
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(320px, 1.1fr);
+      gap: clamp(42px, 8vw, 100px);
+      padding: clamp(64px, 10vh, 120px) 0 70px;
+      align-items: start;
+    }
+    .eyebrow {
+      color: var(--teal);
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: .14em;
+      font-size: .76rem;
+      margin: 0 0 18px;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.8rem, 6vw, 5.8rem);
+      font-weight: 400;
+      line-height: .98;
+      letter-spacing: -.05em;
+      margin: 0;
+    }
+    .intro {
+      color: var(--slate);
+      line-height: 1.65;
+      font-size: 1.04rem;
+      max-width: 520px;
+      margin-top: 28px;
+    }
+    .panel {
+      background: var(--white);
+      border: 1px solid var(--line);
+      box-shadow: 0 18px 48px rgba(27, 39, 51, .08);
+      padding: clamp(24px, 4vw, 42px);
+    }
+    .tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid var(--line);
+      margin: -8px 0 30px;
+    }
+    .tab {
+      border: 0;
+      border-bottom: 3px solid transparent;
+      background: transparent;
+      color: var(--slate);
+      padding: 14px 8px;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .tab[aria-selected="true"] {
+      color: var(--navy);
+      border-bottom-color: var(--teal);
+    }
+    .pane[hidden] { display: none; }
+    h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.9rem, 3vw, 2.5rem);
+      font-weight: 400;
+      margin: 0 0 10px;
+    }
+    .copy {
+      color: var(--slate);
+      line-height: 1.55;
+      margin: 0 0 28px;
+    }
+    label {
+      display: block;
+      margin: 18px 0 7px;
+      font-size: .84rem;
+      font-weight: 700;
+      letter-spacing: .03em;
+    }
+    input {
+      width: 100%;
+      min-height: 50px;
+      border: 1px solid #b8c2ca;
+      border-radius: 2px;
+      padding: 0 14px;
+      font: inherit;
+      color: var(--navy);
+      background: var(--white);
+    }
+    input:focus {
+      outline: 3px solid rgba(127, 179, 179, .45);
+      border-color: var(--teal);
+    }
+    .honeypot {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      overflow: hidden !important;
+      clip: rect(1px, 1px, 1px, 1px) !important;
+      white-space: nowrap !important;
+    }
+    button.primary {
+      width: 100%;
+      min-height: 52px;
+      margin-top: 26px;
+      border: 1px solid var(--teal);
+      border-radius: 2px;
+      color: var(--white);
+      background: var(--teal);
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    button.primary:hover { background: var(--navy); border-color: var(--navy); }
+    button.primary:disabled { opacity: .55; cursor: wait; }
+    .status {
+      min-height: 24px;
+      margin: 16px 0 0;
+      color: var(--slate);
+      line-height: 1.45;
+      font-size: .9rem;
+    }
+    .status.error { color: var(--error); }
+    .privacy {
+      margin-top: 24px;
+      color: var(--slate);
+      font-size: .78rem;
+      line-height: 1.45;
+    }
+    footer {
+      margin-top: auto;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      color: var(--slate);
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      font-size: .8rem;
+    }
+    @media (max-width: 780px) {
+      .brand { align-items: flex-start; flex-direction: column; gap: 8px; }
+      .brand-note { text-align: left; }
+      .content { grid-template-columns: 1fr; padding-top: 56px; }
+      h1 { font-size: clamp(3rem, 15vw, 5rem); }
+      footer { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <a class="brand" href="<?= websiteUrl ?>">
+        <span class="brand-name">Harbour Line Advisory</span>
+        <span class="brand-note">Private operating brief</span>
+      </a>
+      <div class="wave" aria-hidden="true"></div>
+    </header>
+
+    <section class="content">
+      <div>
+        <p class="eyebrow">Selective access</p>
+        <h1>Close to the facts.</h1>
+        <p class="intro">The operating brief is shared with a small number of owners, lenders and investment decision-makers. Access is reviewed personally.</p>
+      </div>
+
+      <div class="panel">
+        <div class="tabs" role="tablist" aria-label="Access options">
+          <button class="tab" type="button" role="tab" id="request-tab" aria-controls="request-pane" aria-selected="true">Request access</button>
+          <button class="tab" type="button" role="tab" id="code-tab" aria-controls="code-pane" aria-selected="false">Use a code</button>
+        </div>
+
+        <section class="pane" id="request-pane" role="tabpanel" aria-labelledby="request-tab">
+          <h2>Request private access</h2>
+          <p class="copy">Tell us who you are. Ryan will receive the request with a unique access code and can approve, send or decline it.</p>
+          <form id="request-form">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" autocomplete="name" maxlength="120" required>
+
+            <label for="organisation">Organisation</label>
+            <input id="organisation" name="organisation" type="text" autocomplete="organization" maxlength="160" required>
+
+            <label for="email">Work email</label>
+            <input id="email" name="email" type="email" autocomplete="email" maxlength="254" required>
+
+            <div class="honeypot" aria-hidden="true">
+              <label for="website">Website</label>
+              <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+            </div>
+
+            <button class="primary" id="request-submit" type="submit">Request access</button>
+            <p class="status" id="request-status" role="status" aria-live="polite"></p>
+          </form>
+        </section>
+
+        <section class="pane" id="code-pane" role="tabpanel" aria-labelledby="code-tab" hidden>
+          <h2>Enter your access code</h2>
+          <p class="copy">Use the same email address that was approved.</p>
+          <form id="code-form">
+            <label for="code-email">Approved email</label>
+            <input id="code-email" name="email" type="email" autocomplete="email" maxlength="254" required>
+
+            <label for="access-code">Access code</label>
+            <input id="access-code" name="code" type="text" autocomplete="one-time-code" maxlength="80" autocapitalize="characters" required>
+
+            <button class="primary" id="code-submit" type="submit">Open the operating brief</button>
+            <p class="status" id="code-status" role="alert" aria-live="polite"></p>
+          </form>
+        </section>
+
+        <p class="privacy">The details entered here are used only to manage access, protect the integrity of the diagnostic and follow up on a submitted brief.</p>
+      </div>
+    </section>
+
+    <footer>
+      <span>Selective mandates.</span>
+      <span>Access recorded and reviewed.</span>
+    </footer>
+  </main>
+
+  <script>
+    const requestTab = document.getElementById('request-tab');
+    const codeTab = document.getElementById('code-tab');
+    const requestPane = document.getElementById('request-pane');
+    const codePane = document.getElementById('code-pane');
+
+    function selectTab(which) {
+      const requestSelected = which === 'request';
+      requestTab.setAttribute('aria-selected', String(requestSelected));
+      codeTab.setAttribute('aria-selected', String(!requestSelected));
+      requestPane.hidden = !requestSelected;
+      codePane.hidden = requestSelected;
+      const target = requestSelected ? document.getElementById('name') : document.getElementById('code-email');
+      window.setTimeout(() => target.focus(), 50);
+    }
+
+    requestTab.addEventListener('click', () => selectTab('request'));
+    codeTab.addEventListener('click', () => selectTab('code'));
+
+    document.getElementById('request-form').addEventListener('submit', (event) => {
+      event.preventDefault();
+      const button = document.getElementById('request-submit');
+      const status = document.getElementById('request-status');
+      const payload = Object.fromEntries(new FormData(event.currentTarget).entries());
+      button.disabled = true;
+      status.className = 'status';
+      status.textContent = 'Recording your request…';
+
+      google.script.run
+        .withSuccessHandler((result) => {
+          button.disabled = false;
+          status.textContent = result.message;
+          event.currentTarget.reset();
+        })
+        .withFailureHandler((error) => {
+          button.disabled = false;
+          status.className = 'status error';
+          status.textContent = error && error.message ? error.message : 'The request could not be recorded. Please try again.';
+        })
+        .requestAccess(payload);
+    });
+
+    document.getElementById('code-form').addEventListener('submit', (event) => {
+      event.preventDefault();
+      const button = document.getElementById('code-submit');
+      const status = document.getElementById('code-status');
+      const payload = Object.fromEntries(new FormData(event.currentTarget).entries());
+      button.disabled = true;
+      status.className = 'status';
+      status.textContent = 'Checking access…';
+
+      google.script.run
+        .withSuccessHandler((result) => {
+          if (result.ok) {
+            status.textContent = 'Access confirmed. Opening the brief…';
+            window.location.assign(result.url);
+            return;
+          }
+          button.disabled = false;
+          status.className = 'status error';
+          status.textContent = result.message;
+        })
+        .withFailureHandler(() => {
+          button.disabled = false;
+          status.className = 'status error';
+          status.textContent = 'Access could not be checked. Please try again.';
+        })
+        .verifyAccess(payload);
+    });
+  </script>
+</body>
+</html>
