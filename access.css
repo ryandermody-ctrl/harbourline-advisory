@@ -1,0 +1,107 @@
+.primary-action {
+  cursor: pointer;
+  font: inherit;
+}
+
+.access-dialog {
+  width: min(92vw, 480px);
+  padding: 0;
+  color: var(--navy);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  box-shadow: 0 28px 80px rgba(27, 39, 51, 0.24);
+}
+
+.access-dialog::backdrop {
+  background: rgba(27, 39, 51, 0.68);
+  backdrop-filter: blur(4px);
+}
+
+.access-form {
+  position: relative;
+  padding: 42px;
+}
+
+.dialog-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  color: var(--slate);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-size: 1.7rem;
+  line-height: 1;
+}
+
+.dialog-eyebrow {
+  margin: 0 0 12px;
+  color: var(--teal);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.access-form h2 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2rem, 7vw, 3rem);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+}
+
+.dialog-copy {
+  margin: 18px 0 28px;
+  color: var(--slate);
+  line-height: 1.5;
+}
+
+.access-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.access-form input {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 14px;
+  color: var(--navy);
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  font: inherit;
+  outline: none;
+}
+
+.access-form input:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(14, 106, 106, 0.14);
+}
+
+.access-error {
+  min-height: 20px;
+  margin: 10px 0 4px;
+  color: #9b2c2c;
+  font-size: 0.84rem;
+}
+
+.dialog-submit {
+  width: 100%;
+  margin-top: 8px;
+}
+
+@media (max-width: 520px) {
+  .access-form {
+    padding: 36px 24px 28px;
+  }
+}
