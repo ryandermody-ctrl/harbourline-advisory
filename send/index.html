@@ -3,276 +3,672 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Private Harbour Line invitation sender.">
+  <meta name="description" content="Create a private tracked invitation to the Harbour Line international study.">
   <meta name="robots" content="noindex,nofollow,noarchive">
-  <meta name="theme-color" content="#1B2733">
-  <title>Send an invitation | Harbour Line Advisory</title>
+  <meta name="theme-color" content="#11212d">
+  <title>Collaborator invitation console | Harbour Line Advisory</title>
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="../styles.css">
   <style>
-    .send-main {
-      width: min(100%, 820px);
-      padding: clamp(54px, 9vh, 96px) 0 72px;
+    :root {
+      --ink: #11212d;
+      --navy: #1b2733;
+      --teal: #0e6a6a;
+      --aqua: #8bc5bf;
+      --sea: #dcebea;
+      --paper: #f8fbfb;
+      --white: #ffffff;
+      --slate: #52616f;
+      --line: rgba(17, 33, 45, .16);
+      --error: #963d3d;
+      --gold: #bd9351;
     }
 
-    .send-title {
-      max-width: 760px;
-      font-size: clamp(3rem, 8vw, 6.6rem);
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 92% 7%, rgba(139, 197, 191, .20), transparent 25rem),
+        var(--paper);
+      font-family: Arial, Helvetica, sans-serif;
+      -webkit-font-smoothing: antialiased;
     }
 
-    .send-intro {
-      max-width: 680px;
+    ::selection { color: var(--white); background: var(--teal); }
+
+    .shell {
+      width: min(100%, 1440px);
+      min-height: 100svh;
+      margin: 0 auto;
+      padding: 28px clamp(20px, 6vw, 92px) 30px;
+      display: flex;
+      flex-direction: column;
     }
 
-    .send-form {
-      margin-top: 42px;
-      display: grid;
+    .topbar {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
       gap: 24px;
+      padding: 8px 0 18px;
+      border-bottom: 3px solid var(--ink);
+    }
+
+    .brand {
+      color: inherit;
+      text-decoration: none;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.5rem, 2.7vw, 2.65rem);
+      font-weight: 700;
+      letter-spacing: -.04em;
+    }
+
+    .descriptor {
+      color: var(--teal);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      text-align: right;
+    }
+
+    .tideline {
+      height: 31px;
+      overflow: hidden;
+    }
+
+    .tideline svg { width: 100%; height: 100%; display: block; }
+    .tideline path { fill: none; stroke-linecap: round; }
+    .tideline .one { stroke: var(--aqua); stroke-width: 2.2; }
+    .tideline .two { stroke: #d7e0e2; stroke-width: 1.5; }
+
+    .intro {
+      display: grid;
+      grid-template-columns: minmax(0, .95fr) minmax(290px, .55fr);
+      gap: clamp(36px, 8vw, 110px);
+      align-items: end;
+      padding: clamp(54px, 9vh, 96px) 0 52px;
+    }
+
+    .eyebrow {
+      margin: 0 0 17px;
+      color: var(--teal);
+      font-size: .74rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 400;
+      letter-spacing: -.045em;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(3.6rem, 8vw, 8rem);
+      line-height: .92;
+    }
+
+    .intro-copy {
+      margin: 0;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      color: var(--slate);
+      font-size: clamp(1rem, 1.3vw, 1.18rem);
+      line-height: 1.62;
+    }
+
+    .workflow {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--line);
+      background: var(--line);
+      gap: 1px;
+      margin-bottom: 42px;
+    }
+
+    .workflow div {
+      min-height: 112px;
+      padding: 23px 25px;
+      background: rgba(255, 255, 255, .86);
+    }
+
+    .workflow strong {
+      display: block;
+      margin-bottom: 12px;
+      color: var(--teal);
+      font-size: .72rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .workflow span {
+      color: var(--slate);
+      line-height: 1.48;
+    }
+
+    .console {
+      display: grid;
+      grid-template-columns: minmax(0, .85fr) minmax(360px, 1.15fr);
+      gap: clamp(28px, 5vw, 68px);
+      align-items: start;
+      padding-bottom: 70px;
+    }
+
+    .panel {
+      background: rgba(255, 255, 255, .94);
+      border: 1px solid var(--line);
+      box-shadow: 0 22px 55px rgba(17, 33, 45, .08);
+      padding: clamp(24px, 4vw, 42px);
+    }
+
+    .panel h2 {
+      margin: 0 0 8px;
+      font-size: clamp(2rem, 3.4vw, 3.25rem);
+    }
+
+    .panel-lead {
+      margin: 0 0 28px;
+      color: var(--slate);
+      line-height: 1.55;
+    }
+
+    .fields {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
     }
 
     .field {
       display: grid;
-      gap: 9px;
+      gap: 8px;
     }
 
-    .field label {
-      color: var(--navy);
-      font-size: 0.78rem;
+    .field.full { grid-column: 1 / -1; }
+
+    label {
+      color: var(--ink);
+      font-size: .75rem;
       font-weight: 700;
-      letter-spacing: 0.1em;
+      letter-spacing: .08em;
       text-transform: uppercase;
     }
 
-    .field input,
-    .field textarea {
+    input,
+    textarea {
       width: 100%;
-      color: var(--navy);
-      background: var(--white);
-      border: 1px solid var(--line);
+      border: 1px solid #bdc8ce;
       border-radius: 2px;
+      color: var(--ink);
+      background: var(--white);
       font: inherit;
-      line-height: 1.55;
-      padding: 15px 16px;
+      line-height: 1.5;
+      padding: 13px 14px;
     }
 
-    .field input:focus,
-    .field textarea:focus {
+    input { min-height: 50px; }
+    textarea { min-height: 270px; resize: vertical; }
+
+    input:focus,
+    textarea:focus {
       border-color: var(--teal);
-      outline: 3px solid rgba(127, 179, 179, 0.32);
+      outline: 3px solid rgba(139, 197, 191, .36);
       outline-offset: 1px;
     }
 
-    .field textarea {
-      min-height: 260px;
-      resize: vertical;
-    }
-
-    .share-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .share-button {
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       min-height: 54px;
-      padding: 0 20px;
-      border: 1px solid var(--navy);
+      border: 1px solid var(--ink);
       border-radius: 2px;
-      color: var(--navy);
+      color: var(--ink);
       background: transparent;
       font: inherit;
       font-weight: 700;
       cursor: pointer;
-      transition: transform 160ms ease, color 160ms ease, background-color 160ms ease;
+      text-decoration: none;
+      transition: transform 150ms ease, color 150ms ease, background-color 150ms ease;
     }
 
-    .share-button:hover {
-      color: var(--white);
-      background: var(--navy);
-      transform: translateY(-2px);
-    }
+    .button:hover { transform: translateY(-2px); color: var(--white); background: var(--ink); }
+    .button:focus-visible { outline: 3px solid var(--aqua); outline-offset: 3px; }
 
-    .share-button.primary {
-      grid-column: 1 / -1;
+    .button.primary {
+      width: 100%;
+      margin-top: 26px;
       color: var(--white);
       background: var(--teal);
       border-color: var(--teal);
     }
 
-    .share-button.primary:hover {
-      background: var(--navy);
-      border-color: var(--navy);
+    .button.primary:hover { background: var(--ink); border-color: var(--ink); }
+
+    .share-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 11px;
+      margin-top: 20px;
     }
 
-    .share-button:focus-visible {
-      outline: 3px solid var(--teal-soft);
-      outline-offset: 3px;
+    .share-grid .native { grid-column: 1 / -1; color: var(--white); background: var(--teal); border-color: var(--teal); }
+
+    .share-grid[hidden],
+    .referral-card[hidden] { display: none; }
+
+    .referral-card {
+      margin-top: 24px;
+      padding: 21px;
+      border-left: 4px solid var(--gold);
+      background: #f4f7f7;
     }
 
-    .send-note,
+    .referral-card strong {
+      display: block;
+      margin-bottom: 8px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.35rem;
+      font-weight: 400;
+    }
+
+    .referral-link {
+      width: 100%;
+      min-height: 46px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .78rem;
+    }
+
+    .tracking-note,
     .status {
-      margin: 0;
       color: var(--slate);
-      font-size: 0.9rem;
-      line-height: 1.5;
+      font-size: .84rem;
+      line-height: 1.52;
     }
 
-    .status {
-      min-height: 1.5em;
-      color: var(--teal);
-      font-weight: 700;
+    .tracking-note { margin: 22px 0 0; }
+    .status { min-height: 1.55em; margin: 15px 0 0; color: var(--teal); font-weight: 700; }
+    .status.error { color: var(--error); }
+
+    .history {
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
     }
 
-    @media (max-width: 640px) {
-      .send-main {
-        padding-top: 52px;
-      }
+    .history h3 {
+      margin: 0 0 14px;
+      font-size: 1.45rem;
+    }
 
-      .share-grid {
-        grid-template-columns: 1fr;
-      }
+    .history-list {
+      display: grid;
+      gap: 9px;
+    }
 
-      .share-button.primary {
-        grid-column: auto;
-      }
+    .history-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--line);
+      color: var(--slate);
+      font-size: .84rem;
+    }
+
+    .history-item strong { color: var(--ink); }
+
+    footer {
+      margin-top: auto;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      color: var(--slate);
+      font-size: .8rem;
+    }
+
+    @media (max-width: 900px) {
+      .intro, .console { grid-template-columns: 1fr; }
+      .workflow { grid-template-columns: 1fr; }
+      .intro-copy { max-width: 650px; }
+    }
+
+    @media (max-width: 620px) {
+      .topbar { align-items: flex-start; flex-direction: column; }
+      .descriptor { text-align: left; }
+      .fields, .share-grid { grid-template-columns: 1fr; }
+      .field.full, .share-grid .native { grid-column: auto; }
+      .panel { padding: 22px; }
+      footer { flex-direction: column; }
     }
   </style>
 </head>
 <body>
-  <main class="page-shell">
-    <header class="site-header" aria-label="Harbour Line Advisory">
-      <a class="brand" href="/" aria-label="Harbour Line Advisory home">
-        <span class="brand-name">Harbour Line Advisory</span>
-        <span class="brand-descriptor">Private invitation tool</span>
-      </a>
-
-      <div class="harbour-line" aria-hidden="true">
-        <svg viewBox="0 0 1200 34" preserveAspectRatio="none" role="presentation">
-          <path class="wave wave-primary" d="M0 12 C30 2 60 2 90 12 S150 22 180 12 S240 2 270 12 S330 22 360 12 S420 2 450 12 S510 22 540 12 S600 2 630 12 S690 22 720 12 S780 2 810 12 S870 22 900 12 S960 2 990 12 S1050 22 1080 12 S1140 2 1200 12" />
-          <path class="wave wave-secondary" d="M0 23 C30 13 60 13 90 23 S150 33 180 23 S240 13 270 23 S330 33 360 23 S420 13 450 23 S510 33 540 23 S600 13 630 23 S690 33 720 23 S780 13 810 23 S870 33 900 23 S960 13 990 23 S1050 22 1080 23 S1140 13 1200 23" />
-        </svg>
-      </div>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="https://harbourlineadvisory.com">Harbour Line Advisory</a>
+      <div class="descriptor">Collaborator invitation console</div>
     </header>
 
-    <section class="send-main" aria-labelledby="send-title">
-      <p class="eyebrow">Private study invitation</p>
-      <h1 class="send-title" id="send-title">Send it anywhere.</h1>
-      <p class="subhead send-intro">Enter the person’s first name, adjust the note if needed, then share it through WhatsApp, email, text message or your phone’s normal share menu.</p>
+    <div class="tideline" aria-hidden="true">
+      <svg viewBox="0 0 1200 34" preserveAspectRatio="none">
+        <path class="one" d="M0 12 C30 2 60 2 90 12 S150 22 180 12 S240 2 270 12 S330 22 360 12 S420 2 450 12 S510 22 540 12 S600 2 630 12 S690 22 720 12 S780 2 810 12 S870 22 900 12 S960 2 990 12 S1050 22 1080 12 S1140 2 1200 12" />
+        <path class="two" d="M0 23 C30 13 60 13 90 23 S150 33 180 23 S240 13 270 23 S330 33 360 23 S420 13 450 23 S510 33 540 23 S600 13 630 23 S690 33 720 23 S780 13 810 23 S870 33 900 23 S960 13 990 23 S1050 22 1080 23 S1140 13 1200 23" />
+      </svg>
+    </div>
 
-      <div class="send-form">
-        <div class="field">
-          <label for="recipient-name">First name</label>
-          <input id="recipient-name" name="recipient-name" type="text" autocomplete="off" placeholder="Ammar">
+    <section class="intro">
+      <div>
+        <p class="eyebrow">One person. One link. Full attribution.</p>
+        <h1>Help us find the people who know where the model breaks.</h1>
+      </div>
+      <p class="intro-copy">Create a separate invitation for each person. The recipient sees a polished explanation of the study before requesting private access. Harbour Line can then connect the introduction, opening, request and diagnostic entry back to the person who made the introduction.</p>
+    </section>
+
+    <section class="workflow" aria-label="How the invitation works">
+      <div><strong>01 · Create</strong><span>Enter your details and one intended recipient.</span></div>
+      <div><strong>02 · Forward</strong><span>Send the prepared note by WhatsApp, email, text or any sharing app.</span></div>
+      <div><strong>03 · Attribute</strong><span>The unique link keeps the introduction connected through the private access journey.</span></div>
+    </section>
+
+    <section class="console">
+      <div class="panel">
+        <h2>Invitation details</h2>
+        <p class="panel-lead">Your details are remembered on this device. Create a fresh link for every recipient.</p>
+
+        <form id="referral-form">
+          <div class="fields">
+            <div class="field">
+              <label for="sender-name">Your name</label>
+              <input id="sender-name" name="senderName" type="text" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="sender-email">Your email</label>
+              <input id="sender-email" name="senderEmail" type="email" autocomplete="email" required>
+            </div>
+            <div class="field">
+              <label for="recipient-name">Recipient name</label>
+              <input id="recipient-name" name="recipientName" type="text" autocomplete="off" required>
+            </div>
+            <div class="field">
+              <label for="recipient-email">Recipient email</label>
+              <input id="recipient-email" name="recipientEmail" type="email" autocomplete="off" required>
+            </div>
+            <div class="field">
+              <label for="recipient-org">Recipient organisation</label>
+              <input id="recipient-org" name="recipientOrganisation" type="text" autocomplete="off">
+            </div>
+            <div class="field">
+              <label for="recipient-mobile">Mobile for direct text</label>
+              <input id="recipient-mobile" name="recipientMobile" type="tel" autocomplete="off" placeholder="Optional">
+            </div>
+          </div>
+
+          <button class="button primary" type="submit">Create tracked invitation</button>
+          <p class="status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+
+        <div class="history" id="history" hidden>
+          <h3>Recent invitations on this device</h3>
+          <div class="history-list" id="history-list"></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Forwarding note</h2>
+        <p class="panel-lead">Personalise it if useful. The unique study link is added automatically.</p>
+
+        <div class="field full">
+          <label for="message">Message</label>
+          <textarea id="message" spellcheck="true"></textarea>
         </div>
 
-        <div class="field">
-          <label for="message">Invitation message</label>
-          <textarea id="message" name="message" spellcheck="true"></textarea>
+        <div class="referral-card" id="referral-card" hidden>
+          <strong>Unique link created</strong>
+          <input class="referral-link" id="referral-link" type="text" readonly>
         </div>
 
-        <div class="share-grid" aria-label="Sharing options">
-          <button class="share-button primary" id="native-share" type="button">Share invitation</button>
-          <button class="share-button" id="whatsapp-share" type="button">WhatsApp</button>
-          <button class="share-button" id="email-share" type="button">Email</button>
-          <button class="share-button" id="sms-share" type="button">Text message</button>
-          <button class="share-button" id="copy-share" type="button">Copy message</button>
+        <div class="share-grid" id="share-grid" hidden>
+          <button class="button native" id="native-share" type="button">Share invitation</button>
+          <button class="button" id="whatsapp-share" type="button">WhatsApp</button>
+          <button class="button" id="email-share" type="button">Email</button>
+          <button class="button" id="sms-share" type="button">Text message</button>
+          <button class="button" id="copy-message" type="button">Copy message</button>
+          <button class="button" id="copy-link" type="button">Copy link only</button>
         </div>
 
-        <p class="status" id="status" role="status" aria-live="polite"></p>
-        <p class="send-note">Recipients request access through the Harbour Line site. You still approve each person before they can reach the diagnostic.</p>
+        <p class="status" id="share-status" role="status" aria-live="polite"></p>
+        <p class="tracking-note">Attribution follows the unique link, regardless of whether it is sent by email, WhatsApp, text or another app. If somebody removes the link or replaces it with an untracked URL, that off-platform action cannot be identified.</p>
       </div>
     </section>
 
-    <footer class="site-footer">
-      <span>Private working page.</span>
-      <span>Not linked publicly.</span>
+    <footer>
+      <span>Harbour Line Advisory</span>
+      <span>Private collaborator tool · One recipient per link</span>
     </footer>
   </main>
 
   <script>
     (() => {
-      const website = "https://harbourlineadvisory.com";
-      const subject = "A small private market study";
-      const nameInput = document.getElementById("recipient-name");
-      const messageInput = document.getElementById("message");
-      const status = document.getElementById("status");
-      let messageWasEdited = false;
+      const tracker = 'https://script.google.com/macros/s/AKfycbxmjJKL8TU71GAS5rvYFQOzCng3Hs8PxWNHsowkTD5Oq_1MI9GMk_4heNbk0fpYg5RN4w/exec';
+      const studyBase = 'https://harbourlineadvisory.com/study/';
+      const storageKey = 'hla-collaborator-profile-v1';
+      const historyKey = 'hla-referral-history-v1';
+
+      const form = document.getElementById('referral-form');
+      const senderName = document.getElementById('sender-name');
+      const senderEmail = document.getElementById('sender-email');
+      const recipientName = document.getElementById('recipient-name');
+      const recipientEmail = document.getElementById('recipient-email');
+      const recipientOrganisation = document.getElementById('recipient-org');
+      const recipientMobile = document.getElementById('recipient-mobile');
+      const message = document.getElementById('message');
+      const referralCard = document.getElementById('referral-card');
+      const referralLink = document.getElementById('referral-link');
+      const shareGrid = document.getElementById('share-grid');
+      const formStatus = document.getElementById('form-status');
+      const shareStatus = document.getElementById('share-status');
+      const history = document.getElementById('history');
+      const historyList = document.getElementById('history-list');
+
+      let currentReferralId = '';
+      let messageEdited = false;
+
+      const safe = (value, max = 180) => String(value || '').trim().replace(/[<>]/g, '').slice(0, max);
+      const uuid = () => crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(16).slice(2)}-${Math.random().toString(16).slice(2)}`;
 
       const buildMessage = () => {
-        const firstName = nameInput.value.trim();
-        const greeting = firstName ? `Hi ${firstName},` : "Hi,";
-
-        return `${greeting}\n\nI’m running a small private study with people across Canada, the UK, Europe and the Gulf on a problem I keep seeing: capital decisions are tested thoroughly on paper, but less well against the operation itself.\n\nI’d really value your perspective. The diagnostic takes about five minutes. Please answer it against a real asset or capital decision, current or recent. I’m using the responses to shape the offer.\n\nRequest access here: ${website}\n\nRyan`;
+        const firstName = safe(recipientName.value, 100).split(/\s+/)[0] || 'there';
+        const sender = safe(senderName.value, 120) || 'A colleague';
+        return `Hi ${firstName},\n\n${sender} thought your perspective would be valuable for a small private international study being run by Harbour Line Advisory.\n\nIt looks at a deceptively simple question: after the financial, legal and technical work is complete, how well has the capital decision actually been tested against the operation itself?\n\nThe brief explains the study, and the diagnostic takes about five minutes. It is best answered against a real physical asset or capital decision, current or recent.\n\nYour private study link:\n[LINK]\n\nThank you.`;
       };
 
-      const currentMessage = () => messageInput.value.trim() || buildMessage();
-      const setStatus = (text) => {
-        status.textContent = text;
-        window.clearTimeout(setStatus.timeout);
-        setStatus.timeout = window.setTimeout(() => {
-          status.textContent = "";
-        }, 3500);
+      const setStatus = (element, text, isError = false) => {
+        element.textContent = text;
+        element.classList.toggle('error', isError);
       };
 
-      messageInput.value = buildMessage();
+      const data = () => ({
+        id: currentReferralId,
+        senderName: safe(senderName.value, 120),
+        senderEmail: safe(senderEmail.value, 254).toLowerCase(),
+        recipientName: safe(recipientName.value, 120),
+        recipientEmail: safe(recipientEmail.value, 254).toLowerCase(),
+        recipientOrganisation: safe(recipientOrganisation.value, 160),
+      });
 
-      nameInput.addEventListener("input", () => {
-        if (!messageWasEdited) {
-          messageInput.value = buildMessage();
+      const ping = (action, channel = '') => {
+        if (!currentReferralId) return;
+        const payload = data();
+        const query = new URLSearchParams({ action, channel, ...payload });
+        fetch(`${tracker}?${query.toString()}`, { mode: 'no-cors', keepalive: true }).catch(() => {});
+      };
+
+      const finalMessage = () => message.value.replace('[LINK]', referralLink.value).trim();
+
+      const saveProfile = () => {
+        localStorage.setItem(storageKey, JSON.stringify({
+          name: safe(senderName.value, 120),
+          email: safe(senderEmail.value, 254),
+        }));
+      };
+
+      const addHistory = () => {
+        let items = [];
+        try { items = JSON.parse(localStorage.getItem(historyKey) || '[]'); } catch { items = []; }
+        items.unshift({
+          id: currentReferralId,
+          recipient: safe(recipientName.value, 120),
+          organisation: safe(recipientOrganisation.value, 160),
+          link: referralLink.value,
+          createdAt: new Date().toISOString(),
+        });
+        localStorage.setItem(historyKey, JSON.stringify(items.slice(0, 8)));
+        renderHistory();
+      };
+
+      const renderHistory = () => {
+        let items = [];
+        try { items = JSON.parse(localStorage.getItem(historyKey) || '[]'); } catch { items = []; }
+        history.hidden = items.length === 0;
+        historyList.innerHTML = '';
+        items.forEach((item) => {
+          const row = document.createElement('div');
+          row.className = 'history-item';
+          const person = document.createElement('span');
+          const strong = document.createElement('strong');
+          strong.textContent = item.recipient || 'Recipient';
+          person.appendChild(strong);
+          if (item.organisation) person.append(` · ${item.organisation}`);
+          const when = document.createElement('span');
+          when.textContent = new Date(item.createdAt).toLocaleDateString();
+          row.append(person, when);
+          historyList.appendChild(row);
+        });
+      };
+
+      const invalidate = () => {
+        currentReferralId = '';
+        referralCard.hidden = true;
+        shareGrid.hidden = true;
+        referralLink.value = '';
+        setStatus(shareStatus, '');
+      };
+
+      try {
+        const saved = JSON.parse(localStorage.getItem(storageKey) || '{}');
+        senderName.value = saved.name || '';
+        senderEmail.value = saved.email || '';
+      } catch {}
+
+      message.value = buildMessage();
+      renderHistory();
+
+      [recipientName, recipientEmail, recipientOrganisation, recipientMobile].forEach((input) => {
+        input.addEventListener('input', () => {
+          invalidate();
+          if (!messageEdited) message.value = buildMessage();
+        });
+      });
+
+      [senderName, senderEmail].forEach((input) => {
+        input.addEventListener('input', () => {
+          invalidate();
+          if (!messageEdited) message.value = buildMessage();
+        });
+      });
+
+      message.addEventListener('input', () => { messageEdited = true; });
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        if (!form.reportValidity()) return;
+
+        currentReferralId = uuid();
+        referralLink.value = `${studyBase}?r=${encodeURIComponent(currentReferralId)}`;
+        referralCard.hidden = false;
+        shareGrid.hidden = false;
+        saveProfile();
+        ping('track-create', 'created');
+        addHistory();
+        setStatus(formStatus, 'Tracked invitation created. Use one of the sharing options.');
+        referralCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
+
+      const share = (channel, action) => {
+        if (!currentReferralId) {
+          setStatus(shareStatus, 'Create the tracked invitation first.', true);
+          return;
         }
-      });
+        ping('track-share', channel);
+        action();
+      };
 
-      messageInput.addEventListener("input", () => {
-        messageWasEdited = true;
-      });
-
-      document.getElementById("native-share").addEventListener("click", async () => {
-        const message = currentMessage();
-
+      document.getElementById('native-share').addEventListener('click', () => share('native-share', async () => {
         if (navigator.share) {
           try {
-            await navigator.share({ title: subject, text: message });
+            await navigator.share({
+              title: 'The Operating Reality Study',
+              text: finalMessage().replace(referralLink.value, '').trim(),
+              url: referralLink.value,
+            });
+            setStatus(shareStatus, 'Share menu opened.');
           } catch (error) {
-            if (error && error.name !== "AbortError") {
-              setStatus("The share menu could not open. Use one of the buttons below.");
-            }
+            if (error && error.name !== 'AbortError') setStatus(shareStatus, 'The share menu could not open. Use a direct button below.', true);
           }
           return;
         }
-
         try {
-          await navigator.clipboard.writeText(message);
-          setStatus("Message copied. Paste it into any app.");
+          await navigator.clipboard.writeText(finalMessage());
+          setStatus(shareStatus, 'Message copied. Paste it into any app.');
         } catch {
-          setStatus("Use one of the direct sharing buttons below.");
+          setStatus(shareStatus, 'Use a direct sharing button below.', true);
         }
-      });
+      }));
 
-      document.getElementById("whatsapp-share").addEventListener("click", () => {
-        const url = `https://wa.me/?text=${encodeURIComponent(currentMessage())}`;
-        window.open(url, "_blank", "noopener,noreferrer");
-      });
+      document.getElementById('whatsapp-share').addEventListener('click', () => share('whatsapp', () => {
+        window.open(`https://wa.me/?text=${encodeURIComponent(finalMessage())}`, '_blank', 'noopener,noreferrer');
+      }));
 
-      document.getElementById("email-share").addEventListener("click", () => {
-        const url = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(currentMessage())}`;
-        window.location.href = url;
-      });
+      document.getElementById('email-share').addEventListener('click', () => share('email', () => {
+        const subject = 'A private international study: operating reality';
+        window.location.href = `mailto:${encodeURIComponent(recipientEmail.value.trim())}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(finalMessage())}`;
+      }));
 
-      document.getElementById("sms-share").addEventListener("click", () => {
-        const separator = /iPad|iPhone|iPod/.test(navigator.userAgent) ? "&" : "?";
-        window.location.href = `sms:${separator}body=${encodeURIComponent(currentMessage())}`;
-      });
+      document.getElementById('sms-share').addEventListener('click', () => share('sms', () => {
+        const mobile = recipientMobile.value.trim();
+        const separator = /iPad|iPhone|iPod/.test(navigator.userAgent) ? '&' : '?';
+        window.location.href = `sms:${encodeURIComponent(mobile)}${separator}body=${encodeURIComponent(finalMessage())}`;
+      }));
 
-      document.getElementById("copy-share").addEventListener("click", async () => {
+      document.getElementById('copy-message').addEventListener('click', () => share('copy-message', async () => {
         try {
-          await navigator.clipboard.writeText(currentMessage());
-          setStatus("Message copied.");
+          await navigator.clipboard.writeText(finalMessage());
+          setStatus(shareStatus, 'Full message copied.');
         } catch {
-          messageInput.focus();
-          messageInput.select();
-          setStatus("Message selected. Copy it from the text box.");
+          message.focus();
+          setStatus(shareStatus, 'Copy the message from the text box.', true);
         }
-      });
+      }));
+
+      document.getElementById('copy-link').addEventListener('click', () => share('copy-link', async () => {
+        try {
+          await navigator.clipboard.writeText(referralLink.value);
+          setStatus(shareStatus, 'Unique link copied.');
+        } catch {
+          referralLink.focus();
+          referralLink.select();
+          setStatus(shareStatus, 'Link selected. Copy it from the field.', true);
+        }
+      }));
     })();
   </script>
 </body>
