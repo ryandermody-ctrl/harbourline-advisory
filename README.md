@@ -2,6 +2,12 @@
 
 Static public pages for harbourlineadvisory.com.
 
+## Hosting and deployment
+
+GitHub is the source repository. Cloudflare is the public deployment and domain layer. Changes committed to `main` are detected by Cloudflare and published to the live site.
+
+The Cloudflare dashboard, DNS records, build settings and access logs are not stored in this repository. They should be reviewed and recorded separately before the project is reopened.
+
 ## Current public scope
 
 - `index.html` — private holding page and existing-participant access
@@ -10,7 +16,7 @@ Static public pages for harbourlineadvisory.com.
 - `styles.css` — public visual system
 - `favicon.svg` — site icon
 - `_headers` and `robots.txt` — browser and crawler controls
-- `CNAME` — custom domain
+- `CNAME` — custom-domain record retained for compatibility
 
 ## Temporary deployment exception
 
