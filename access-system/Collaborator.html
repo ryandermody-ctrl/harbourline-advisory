@@ -7,11 +7,96 @@
   <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
   <meta name="referrer" content="no-referrer">
   <title>Collaborator invitations | Harbour Line Advisory</title>
+  <style>
+    :root{--ink:#11212d;--teal:#0e6a6a;--aqua:#8bc5bf;--paper:#f8fbfb;--white:#fff;--slate:#52616f;--line:rgba(17,33,45,.16);--error:#963d3d}
+    *{box-sizing:border-box}body{margin:0;color:var(--ink);background:var(--paper);font-family:Arial,Helvetica,sans-serif}.shell{width:min(100%,1180px);min-height:100vh;margin:0 auto;padding:28px clamp(20px,6vw,84px)}.top{display:flex;justify-content:space-between;gap:20px;align-items:baseline;padding-bottom:18px;border-bottom:3px solid var(--ink)}.brand{font:700 clamp(1.5rem,3vw,2.6rem)/1 Georgia,serif;letter-spacing:-.04em}.tag{color:var(--teal);font-size:.72rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase}.line{height:28px;border-top:2px solid var(--aqua);margin-top:12px;opacity:.65}.intro{display:grid;grid-template-columns:1.1fr .7fr;gap:54px;align-items:end;padding:64px 0 46px}.eyebrow{margin:0 0 16px;color:var(--teal);font-size:.74rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase}h1,h2{font-family:Georgia,"Times New Roman",serif;font-weight:400;letter-spacing:-.045em}h1{margin:0;font-size:clamp(3.4rem,7vw,7.4rem);line-height:.94}.intro p:last-child{margin:0;padding-top:18px;border-top:1px solid var(--line);color:var(--slate);line-height:1.65}.panel{background:var(--white);border:1px solid var(--line);padding:clamp(24px,4vw,40px);box-shadow:0 20px 48px rgba(17,33,45,.08)}.login{max-width:620px;margin:0 auto 70px}.console{display:grid;grid-template-columns:.9fr 1.1fr;gap:34px;padding-bottom:70px}.console[hidden],.login[hidden],.share[hidden],.linkbox[hidden]{display:none}.panel h2{margin:0 0 10px;font-size:clamp(2rem,3.5vw,3.2rem)}.lead{margin:0 0 26px;color:var(--slate);line-height:1.6}.fields{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field{display:grid;gap:7px}.field.full{grid-column:1/-1}label{font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}input,textarea{width:100%;padding:13px 14px;border:1px solid #bdc8ce;background:var(--white);color:var(--ink);font:inherit}textarea{min-height:280px;resize:vertical}input:focus,textarea:focus{outline:3px solid rgba(139,197,191,.35);border-color:var(--teal)}.hint{margin:0;color:var(--slate);font-size:.78rem;line-height:1.45}.button{min-height:52px;padding:0 20px;border:1px solid var(--ink);background:transparent;color:var(--ink);font:700 .94rem Arial,sans-serif;cursor:pointer}.button:hover{background:var(--ink);color:var(--white)}.button.primary{width:100%;margin-top:22px;background:var(--teal);border-color:var(--teal);color:var(--white)}.button:disabled{opacity:.55}.share{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}.share .wide{grid-column:1/-1;background:var(--teal);border-color:var(--teal);color:var(--white)}.linkbox{margin-top:20px;padding:18px;border-left:4px solid #bd9351;background:#f3f6f6}.linkbox strong{display:block;margin-bottom:8px;font:400 1.3rem Georgia,serif}.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.78rem}.status{min-height:1.5em;margin:14px 0 0;color:var(--teal);font-weight:700;font-size:.86rem}.status.error{color:var(--error)}.privacy{margin-top:20px;padding-top:16px;border-top:1px solid var(--line);color:var(--slate);font-size:.84rem;line-height:1.55}footer{display:flex;justify-content:space-between;gap:20px;padding:20px 0 4px;border-top:1px solid var(--line);color:var(--slate);font-size:.8rem}@media(max-width:820px){.intro,.console{grid-template-columns:1fr}}@media(max-width:600px){.top,footer{align-items:flex-start;flex-direction:column}.fields,.share{grid-template-columns:1fr}.field.full,.share .wide{grid-column:auto}}
+  </style>
 </head>
 <body>
-  <main>
-    <h1>Harbour Line Advisory</h1>
-    <p>Private collaborator console.</p>
+  <main class="shell">
+    <header class="top"><span class="brand">Harbour Line Advisory</span><span class="tag">Private collaborator console</span></header>
+    <div class="line" aria-hidden="true"></div>
+    <section class="intro">
+      <div><p class="eyebrow">One person. One link. A traceable introduction.</p><h1>Help us reach the people who know where the model meets reality.</h1></div>
+      <p>Create a separate invitation for each person. Recipient details stay inside the private Google system and never appear in the shared link.</p>
+    </section>
+
+    <section class="panel login" id="login-panel">
+      <h2>Collaborator sign-in</h2>
+      <p class="lead">Enter the private passcode supplied by Ryan.</p>
+      <form id="login-form">
+        <div class="field"><label for="passcode">Collaborator passcode</label><input id="passcode" type="password" autocomplete="current-password" required></div>
+        <button class="button primary" id="login-button" type="submit">Open invitation console</button>
+        <p class="status" id="login-status" role="status"></p>
+      </form>
+    </section>
+
+    <section class="console" id="console" hidden>
+      <div class="panel">
+        <h2>Invitation details</h2>
+        <p class="lead">Create a fresh link for every recipient. Recipient email is optional.</p>
+        <form id="referral-form">
+          <div class="fields">
+            <div class="field"><label for="sender-name">Your name</label><input id="sender-name" type="text" autocomplete="name" required></div>
+            <div class="field"><label for="sender-email">Your email</label><input id="sender-email" type="email" autocomplete="email" required></div>
+            <div class="field"><label for="recipient-name">Recipient name</label><input id="recipient-name" type="text" required></div>
+            <div class="field"><label for="recipient-email">Recipient email, optional</label><input id="recipient-email" type="email"><p class="hint">Adding it helps confirm that the intended person requested access.</p></div>
+            <div class="field full"><label for="recipient-org">Recipient organisation</label><input id="recipient-org" type="text"></div>
+          </div>
+          <button class="button primary" id="create-button" type="submit">Create private invitation</button>
+          <p class="status" id="form-status" role="status"></p>
+        </form>
+        <p class="privacy">The public invitation URL contains only a random referral identifier. Names and contact details remain in Ryan’s private tracker.</p>
+      </div>
+
+      <div class="panel">
+        <h2>Forwarding note</h2>
+        <p class="lead">Personalise this if useful. The private link is inserted after creation.</p>
+        <div class="field"><label for="message">Message</label><textarea id="message"></textarea></div>
+        <div class="linkbox" id="linkbox" hidden><strong>Private link created</strong><input class="mono" id="referral-link" type="text" readonly></div>
+        <div class="share" id="share" hidden>
+          <button class="button wide" id="native-share" type="button">Share invitation</button>
+          <button class="button" id="whatsapp-share" type="button">WhatsApp</button>
+          <button class="button" id="email-share" type="button">Email</button>
+          <button class="button" id="copy-message" type="button">Copy message</button>
+          <button class="button" id="copy-link" type="button">Copy link only</button>
+        </div>
+        <p class="status" id="share-status" role="status"></p>
+        <p class="privacy">Attribution follows the unique link. If it is removed or replaced with the generic website address, later forwarding cannot be attributed.</p>
+      </div>
+    </section>
+
+    <footer><span>Harbour Line Advisory</span><span>Private collaborator tool</span></footer>
   </main>
+
+  <script>
+    (()=>{
+      let token='',referralId='',link='',edited=false;
+      const $=id=>document.getElementById(id);
+      const loginPanel=$('login-panel'),consolePanel=$('console'),senderName=$('sender-name'),senderEmail=$('sender-email'),recipientName=$('recipient-name'),recipientEmail=$('recipient-email'),recipientOrg=$('recipient-org'),message=$('message'),linkbox=$('linkbox'),linkInput=$('referral-link'),share=$('share');
+      const clean=(v,n=180)=>String(v||'').trim().replace(/[<>]/g,'').slice(0,n);
+      const first=()=>clean(recipientName.value,100).split(/\s+/)[0]||'there';
+      const build=()=>`Hi ${first()},\n\nI thought of you because you have seen these decisions from close range.\n\nHarbour Line Advisory is running a small private international study on how thoroughly physical-asset decisions are tested against the operation itself once the financial, legal and technical work is complete.\n\nThe brief explains the study, and the diagnostic takes about five minutes. It is best answered against a real current or recent decision. I would genuinely value your perspective.\n\nYour private study link:\n[LINK]\n\n${clean(senderName.value,120)||'Thank you'}`;
+      const status=(id,text,error=false)=>{$(id).textContent=text||'';$(id).classList.toggle('error',error)};
+      const invalidate=()=>{referralId='';link='';linkInput.value='';linkbox.hidden=true;share.hidden=true};
+      const payload=()=>({senderName:clean(senderName.value,120),senderEmail:clean(senderEmail.value,254),recipientName:clean(recipientName.value,120),recipientEmail:clean(recipientEmail.value,254),recipientOrganisation:clean(recipientOrg.value,160)});
+      const finalMessage=()=>message.value.replace('[LINK]',link).trim();
+      const record=channel=>{if(token&&referralId)google.script.run.withFailureHandler(()=>{}).recordReferralShare(token,referralId,channel)};
+      message.value=build();
+      [senderName,senderEmail,recipientName,recipientEmail,recipientOrg].forEach(el=>el.addEventListener('input',()=>{invalidate();if(!edited)message.value=build()}));
+      message.addEventListener('input',()=>edited=true);
+
+      $('login-form').addEventListener('submit',e=>{e.preventDefault();const b=$('login-button');b.disabled=true;status('login-status','Checking…');google.script.run.withSuccessHandler(r=>{b.disabled=false;if(!r||!r.ok){status('login-status',r&&r.message?r.message:'Passcode not recognised.',true);return}token=r.token;loginPanel.hidden=true;consolePanel.hidden=false}).withFailureHandler(err=>{b.disabled=false;status('login-status',err&&err.message?err.message:'Sign-in failed.',true)}).collaboratorLogin($('passcode').value)});
+
+      $('referral-form').addEventListener('submit',e=>{e.preventDefault();if(!e.currentTarget.reportValidity())return;const b=$('create-button');b.disabled=true;status('form-status','Creating the private link…');google.script.run.withSuccessHandler(r=>{b.disabled=false;if(!r||!r.ok){status('form-status','The invitation could not be created.',true);return}referralId=r.id;link=r.link;linkInput.value=link;linkbox.hidden=false;share.hidden=false;status('form-status','Private invitation created. Choose a sharing option.')}).withFailureHandler(err=>{b.disabled=false;status('form-status',err&&err.message?err.message:'The invitation could not be created.',true)}).createReferral(token,payload())});
+
+      const act=(channel,fn)=>{if(!referralId){status('share-status','Create the private invitation first.',true);return}record(channel);fn()};
+      $('native-share').addEventListener('click',()=>act('Native share',async()=>{if(navigator.share){try{await navigator.share({title:'The Operating Reality Study',text:finalMessage(),url:link})}catch(e){}}else{await navigator.clipboard.writeText(finalMessage());status('share-status','Message copied.')}}));
+      $('whatsapp-share').addEventListener('click',()=>act('WhatsApp',()=>window.open('https://wa.me/?text='+encodeURIComponent(finalMessage()),'_blank','noopener,noreferrer')));
+      $('email-share').addEventListener('click',()=>act('Email',()=>location.href='mailto:'+encodeURIComponent(clean(recipientEmail.value,254))+'?subject='+encodeURIComponent('A private operating reality study')+'&body='+encodeURIComponent(finalMessage())));
+      $('copy-message').addEventListener('click',()=>act('Copy message',async()=>{await navigator.clipboard.writeText(finalMessage());status('share-status','Message copied.')}));
+      $('copy-link').addEventListener('click',()=>act('Copy link',async()=>{await navigator.clipboard.writeText(link);status('share-status','Private link copied.')}));
+    })();
+  </script>
 </body>
 </html>
