@@ -3,373 +3,33 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A private international study of how capital decisions are tested against operating reality.">
-  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="description" content="A private study of how lenders, investors and boards test the operating assumptions behind physical-asset decisions.">
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta name="referrer" content="no-referrer">
   <meta name="theme-color" content="#11212d">
   <title>The Operating Reality Study | Harbour Line Advisory</title>
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <style>
-    :root {
-      --ink: #11212d;
-      --navy: #1b2733;
-      --teal: #0e6a6a;
-      --aqua: #8bc5bf;
-      --sea: #dcebea;
-      --mist: #f3f7f7;
-      --paper: #fbfcfc;
-      --white: #ffffff;
-      --slate: #52616f;
-      --line: rgba(17, 33, 45, .16);
-      --gold: #bd9351;
-    }
-
-    * { box-sizing: border-box; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      margin: 0;
-      min-width: 320px;
-      color: var(--ink);
-      background: var(--paper);
-      font-family: Arial, Helvetica, sans-serif;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-    }
-
-    ::selection { color: var(--white); background: var(--teal); }
-
-    .shell {
-      width: min(100%, 1500px);
-      margin: 0 auto;
-      padding: 28px clamp(22px, 6vw, 96px) 32px;
-    }
-
-    .topbar {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 24px;
-      padding: 8px 0 19px;
-      border-bottom: 3px solid var(--ink);
-    }
-
-    .brand {
-      color: inherit;
-      text-decoration: none;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(1.5rem, 2.7vw, 2.65rem);
-      font-weight: 700;
-      letter-spacing: -.04em;
-    }
-
-    .edition {
-      color: var(--teal);
-      font-size: .73rem;
-      font-weight: 700;
-      letter-spacing: .13em;
-      text-transform: uppercase;
-      text-align: right;
-    }
-
-    .tideline {
-      height: 31px;
-      overflow: hidden;
-    }
-
-    .tideline svg { width: 100%; height: 100%; display: block; }
-    .tideline path { fill: none; stroke-linecap: round; }
-    .tideline .one { stroke: var(--aqua); stroke-width: 2.2; }
-    .tideline .two { stroke: #d7e0e2; stroke-width: 1.5; }
-
-    .hero {
-      position: relative;
-      display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(270px, .55fr);
-      gap: clamp(38px, 8vw, 120px);
-      align-items: end;
-      padding: clamp(68px, 12vh, 135px) 0 clamp(70px, 10vh, 115px);
-    }
-
-    .kicker,
-    .section-kicker {
-      margin: 0 0 18px;
-      color: var(--teal);
-      font-size: .75rem;
-      font-weight: 700;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-    }
-
-    h1,
-    h2,
-    h3,
-    blockquote {
-      font-family: Georgia, "Times New Roman", serif;
-      font-weight: 400;
-      letter-spacing: -.045em;
-    }
-
-    h1 {
-      max-width: 960px;
-      margin: 0;
-      font-size: clamp(3.8rem, 8.7vw, 9.1rem);
-      line-height: .91;
-      text-wrap: balance;
-    }
-
-    .accent { color: var(--teal); }
-
-    .hero-aside {
-      border-top: 1px solid var(--line);
-      padding-top: 22px;
-    }
-
-    .hero-aside p {
-      margin: 0;
-      color: var(--slate);
-      font-size: clamp(1rem, 1.35vw, 1.25rem);
-      line-height: 1.58;
-    }
-
-    .statline {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .stat {
-      min-height: 132px;
-      padding: 26px clamp(18px, 3vw, 38px);
-      border-right: 1px solid var(--line);
-    }
-
-    .stat:last-child { border-right: 0; }
-
-    .stat strong {
-      display: block;
-      margin-bottom: 7px;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(2.2rem, 4vw, 4.1rem);
-      font-weight: 400;
-      letter-spacing: -.05em;
-    }
-
-    .stat span {
-      color: var(--slate);
-      font-size: .82rem;
-      font-weight: 700;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-    }
-
-    .section {
-      padding: clamp(74px, 11vh, 130px) 0;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .split {
-      display: grid;
-      grid-template-columns: minmax(260px, .58fr) minmax(0, 1.05fr);
-      gap: clamp(46px, 9vw, 130px);
-    }
-
-    h2 {
-      max-width: 560px;
-      margin: 0;
-      font-size: clamp(2.9rem, 6vw, 6.3rem);
-      line-height: .97;
-    }
-
-    .body-copy {
-      max-width: 750px;
-      color: var(--slate);
-      font-size: clamp(1.04rem, 1.45vw, 1.3rem);
-      line-height: 1.68;
-    }
-
-    .body-copy p:first-child { margin-top: 0; }
-
-    blockquote {
-      margin: 42px 0 0;
-      padding: 0 0 0 24px;
-      border-left: 4px solid var(--gold);
-      color: var(--ink);
-      font-size: clamp(1.6rem, 3vw, 2.8rem);
-      line-height: 1.15;
-    }
-
-    .questions {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1px;
-      background: var(--line);
-      border: 1px solid var(--line);
-    }
-
-    .question {
-      min-height: 210px;
-      padding: clamp(26px, 4vw, 46px);
-      background: var(--white);
-    }
-
-    .question-number {
-      color: var(--teal);
-      font-size: .75rem;
-      font-weight: 700;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-    }
-
-    .question h3 {
-      margin: 35px 0 0;
-      font-size: clamp(1.55rem, 2.5vw, 2.55rem);
-      line-height: 1.08;
-    }
-
-    .audience-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
-      margin-top: 45px;
-    }
-
-    .audience-card {
-      position: relative;
-      min-height: 245px;
-      padding: 30px;
-      overflow: hidden;
-      color: var(--white);
-      background: var(--ink);
-    }
-
-    .audience-card::after {
-      content: "";
-      position: absolute;
-      width: 170px;
-      height: 170px;
-      right: -74px;
-      bottom: -78px;
-      border: 1px solid rgba(139, 197, 191, .45);
-      border-radius: 50%;
-      box-shadow: 0 0 0 28px rgba(139, 197, 191, .06), 0 0 0 56px rgba(139, 197, 191, .04);
-    }
-
-    .audience-card span {
-      color: var(--aqua);
-      font-size: .72rem;
-      font-weight: 700;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-    }
-
-    .audience-card h3 {
-      max-width: 260px;
-      margin: 52px 0 0;
-      font-size: clamp(1.7rem, 2.7vw, 2.7rem);
-      line-height: 1.05;
-    }
-
-    .privacy-panel {
-      display: grid;
-      grid-template-columns: .7fr 1fr;
-      gap: clamp(34px, 8vw, 100px);
-      align-items: center;
-      padding: clamp(38px, 7vw, 76px);
-      color: var(--white);
-      background: var(--teal);
-    }
-
-    .privacy-panel h2 { font-size: clamp(2.7rem, 5.5vw, 5.6rem); }
-
-    .privacy-panel p {
-      margin: 0;
-      color: rgba(255, 255, 255, .86);
-      font-size: clamp(1.02rem, 1.45vw, 1.27rem);
-      line-height: 1.65;
-    }
-
-    .cta {
-      text-align: center;
-      padding: clamp(85px, 14vh, 150px) 0 clamp(75px, 12vh, 125px);
-    }
-
-    .cta h2 {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .cta p {
-      max-width: 660px;
-      margin: 30px auto 0;
-      color: var(--slate);
-      font-size: 1.08rem;
-      line-height: 1.6;
-    }
-
-    .button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 60px;
-      margin-top: 38px;
-      padding: 0 32px;
-      border: 1px solid var(--teal);
-      border-radius: 2px;
-      color: var(--white);
-      background: var(--teal);
-      text-decoration: none;
-      font-weight: 700;
-      transition: transform 160ms ease, background-color 160ms ease;
-    }
-
-    .button:hover { transform: translateY(-2px); background: var(--ink); border-color: var(--ink); }
-    .button:focus-visible { outline: 3px solid var(--aqua); outline-offset: 4px; }
-
-    footer {
-      display: flex;
-      justify-content: space-between;
-      gap: 24px;
-      padding-top: 22px;
-      border-top: 1px solid var(--line);
-      color: var(--slate);
-      font-size: .8rem;
-    }
-
-    @media (max-width: 840px) {
-      .topbar { align-items: flex-start; flex-direction: column; }
-      .edition { text-align: left; }
-      .hero, .split, .privacy-panel { grid-template-columns: 1fr; }
-      .hero { align-items: start; }
-      .hero-aside { max-width: 620px; }
-      .statline { grid-template-columns: 1fr; }
-      .stat { border-right: 0; border-bottom: 1px solid var(--line); }
-      .stat:last-child { border-bottom: 0; }
-      .questions, .audience-grid { grid-template-columns: 1fr; }
-      .question { min-height: 170px; }
-    }
-
-    @media (max-width: 520px) {
-      .shell { padding-left: 20px; padding-right: 20px; }
-      h1 { font-size: clamp(3.4rem, 18vw, 5.2rem); }
-      .audience-card { min-height: 210px; }
-      footer { flex-direction: column; }
-    }
-
-    @media print {
-      .shell { width: 100%; padding: 18px 26px; }
-      .hero { padding: 48px 0; }
-      .section { padding: 48px 0; }
-      .button { color: var(--ink); background: transparent; }
-    }
+    :root{--ink:#11212d;--teal:#0e6a6a;--aqua:#8bc5bf;--paper:#fbfcfc;--white:#fff;--slate:#52616f;--line:rgba(17,33,45,.16);--mist:#eef5f4}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-width:320px;color:var(--ink);background:var(--paper);font-family:Arial,Helvetica,sans-serif;-webkit-font-smoothing:antialiased}::selection{color:var(--white);background:var(--teal)}
+    .shell{width:min(100%,1460px);margin:0 auto;padding:28px clamp(22px,6vw,92px) 34px}.topbar{display:flex;align-items:baseline;justify-content:space-between;gap:24px;padding:8px 0 20px;border-bottom:3px solid var(--ink)}.brand{color:inherit;text-decoration:none;font:700 clamp(1.5rem,2.7vw,2.6rem)/1 Georgia,serif;letter-spacing:-.04em}.edition{color:var(--teal);font-size:.73rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;text-align:right}
+    .tideline{height:31px;overflow:hidden}.tideline svg{width:100%;height:100%;display:block}.tideline path{fill:none;stroke-linecap:round}.tideline .one{stroke:var(--aqua);stroke-width:2.2}.tideline .two{stroke:#d7e0e2;stroke-width:1.5}
+    .hero{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(270px,.55fr);gap:clamp(38px,8vw,118px);align-items:end;padding:clamp(68px,12vh,132px) 0 clamp(70px,10vh,112px)}.kicker,.section-kicker{margin:0 0 18px;color:var(--teal);font-size:.75rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase}h1,h2,h3{font-family:Georgia,"Times New Roman",serif;font-weight:400;letter-spacing:-.045em}h1{max-width:970px;margin:0;font-size:clamp(3.8rem,8.7vw,9rem);line-height:.91;text-wrap:balance}.accent{color:var(--teal)}.hero-aside{border-top:1px solid var(--line);padding-top:22px}.hero-aside p{margin:0;color:var(--slate);font-size:clamp(1rem,1.35vw,1.25rem);line-height:1.62}
+    .facts{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.fact{min-height:126px;padding:26px clamp(18px,3vw,38px);border-right:1px solid var(--line)}.fact:last-child{border-right:0}.fact strong{display:block;margin-bottom:8px;font:400 clamp(1.65rem,3vw,3rem)/1.05 Georgia,serif;letter-spacing:-.04em}.fact span{color:var(--slate);font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+    .section{padding:clamp(72px,11vh,126px) 0;border-bottom:1px solid var(--line)}.split{display:grid;grid-template-columns:minmax(260px,.62fr) minmax(0,1.05fr);gap:clamp(46px,9vw,128px)}h2{max-width:590px;margin:0;font-size:clamp(2.8rem,5.8vw,6.1rem);line-height:.98}.body{max-width:780px;color:var(--slate);font-size:clamp(1.03rem,1.4vw,1.27rem);line-height:1.7}.body p:first-child{margin-top:0}.body strong{color:var(--ink)}
+    .questions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:44px}.question{min-height:205px;padding:clamp(26px,4vw,44px);background:var(--white)}.question span{color:var(--teal);font-size:.74rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}.question h3{margin:34px 0 0;font-size:clamp(1.5rem,2.4vw,2.45rem);line-height:1.1}
+    .audience{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:44px}.card{min-height:230px;padding:30px;color:var(--white);background:var(--ink)}.card span{color:var(--aqua);font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}.card h3{margin:50px 0 0;font-size:clamp(1.65rem,2.5vw,2.55rem);line-height:1.07}
+    .notice{display:grid;grid-template-columns:.7fr 1fr;gap:clamp(34px,8vw,100px);align-items:center;padding:clamp(38px,7vw,74px);background:var(--mist)}.notice h2{font-size:clamp(2.55rem,5.2vw,5.3rem)}.notice p{margin:0;color:var(--slate);font-size:clamp(1.02rem,1.4vw,1.24rem);line-height:1.68}
+    .cta{text-align:center;padding:clamp(82px,13vh,142px) 0 clamp(74px,11vh,120px)}.cta h2{max-width:900px;margin:0 auto}.cta p{max-width:690px;margin:30px auto 0;color:var(--slate);font-size:1.08rem;line-height:1.65}.status{display:inline-block;margin-top:34px;padding:14px 18px;border:1px solid var(--line);color:var(--ink);background:var(--white);font-weight:700}
+    footer{display:flex;justify-content:space-between;gap:24px;padding-top:22px;border-top:1px solid var(--line);color:var(--slate);font-size:.8rem}
+    @media(max-width:840px){.topbar{align-items:flex-start;flex-direction:column}.edition{text-align:left}.hero,.split,.notice{grid-template-columns:1fr}.facts,.questions,.audience{grid-template-columns:1fr}.fact{border-right:0;border-bottom:1px solid var(--line)}.fact:last-child{border-bottom:0}.question{min-height:165px}}@media(max-width:520px){.shell{padding-left:20px;padding-right:20px}h1{font-size:clamp(3.4rem,18vw,5.2rem)}footer{flex-direction:column}}
   </style>
 </head>
 <body>
   <main class="shell">
     <header class="topbar">
       <a class="brand" href="https://harbourlineadvisory.com">Harbour Line Advisory</a>
-      <div class="edition">International Operating Reality Study · 2026</div>
+      <div class="edition">Operating Reality Study · 2026</div>
     </header>
 
     <div class="tideline" aria-hidden="true">
@@ -381,112 +41,77 @@
 
     <section class="hero">
       <div>
-        <p class="kicker">A private international study</p>
+        <p class="kicker">Private market research</p>
         <h1>The investment case has been tested. <span class="accent">Has the operation?</span></h1>
       </div>
       <aside class="hero-aside">
-        <p>Harbour Line is speaking with a small group of investors, lenders, owners and senior operators about the gap between a capital decision that works on paper and an asset that works in practice.</p>
+        <p>Harbour Line is studying how lenders, investors and boards test the operating assumptions behind decisions involving physical assets.</p>
       </aside>
     </section>
 
-    <section class="statline" aria-label="Study details">
-      <div class="stat"><strong>7</strong><span>Focused questions</span></div>
-      <div class="stat"><strong>5</strong><span>Minutes to complete</span></div>
-      <div class="stat"><strong>4</strong><span>International corridors</span></div>
+    <section class="facts" aria-label="Study parameters">
+      <div class="fact"><strong>One decision</strong><span>Current or recent</span></div>
+      <div class="fact"><strong>Senior participants</strong><span>Close to the decision</span></div>
+      <div class="fact"><strong>Private responses</strong><span>No publication by name</span></div>
     </section>
 
     <section class="section split">
       <div>
-        <p class="section-kicker">Why this study exists</p>
-        <h2>Capital is reviewed in rooms. Operations fail in the field.</h2>
+        <p class="section-kicker">What we are trying to learn</p>
+        <h2>How operating judgement enters a capital decision.</h2>
       </div>
-      <div class="body-copy">
-        <p>Transactions, refinancings and major capital programmes are examined by capable legal, financial and technical teams. Yet the most expensive surprises often sit between those workstreams: maintenance that does not match the model, contracts that do not match the operation, fragile succession, regulatory exposure, or a throughput assumption nobody has reconciled against recent performance.</p>
-        <p>This study is testing whether owners and capital providers need a short, independent operating read before committing further capital, or when an existing asset begins to drift away from the original case.</p>
-        <blockquote>We are trying to find out where operating reality enters the investment decision, who is trusted to bring it in, and what that judgement is worth.</blockquote>
+      <div class="body">
+        <p>Financial, legal and technical reviews do not always reconcile the investment case with recent operating performance, maintenance demands, contracts, staffing and regulatory conditions.</p>
+        <p>The study asks what is handled internally, when outside judgement is useful, who appoints that person and what the work must prove before a committee or board will rely on it.</p>
+        <p><strong>It is market research. Participants are not asked to disclose confidential transaction, customer, employee or asset information.</strong></p>
       </div>
     </section>
 
     <section class="section">
-      <p class="section-kicker">What the diagnostic examines</p>
+      <p class="section-kicker">The four areas</p>
       <div class="questions">
-        <article class="question">
-          <span class="question-number">01 · Cash and runway</span>
-          <h3>Have real bills and covenant tests been reconciled against the model?</h3>
-        </article>
-        <article class="question">
-          <span class="question-number">02 · Ground truth</span>
-          <h3>Has an independent operator recently walked the asset and spoken to the people running it?</h3>
-        </article>
-        <article class="question">
-          <span class="question-number">03 · Model versus operation</span>
-          <h3>Do throughput and utilisation assumptions match recent operating performance?</h3>
-        </article>
-        <article class="question">
-          <span class="question-number">04 · Decision governance</span>
-          <h3>Are the key risks, contracts, conditions and decisions brought together in one accountable view?</h3>
-        </article>
+        <article class="question"><span>01 · Current practice</span><h3>How is operating assurance handled now?</h3></article>
+        <article class="question"><span>02 · External judgement</span><h3>When is an independent operator useful?</h3></article>
+        <article class="question"><span>03 · Reliance</span><h3>What must the work prove before a decision-maker will use it?</h3></article>
+        <article class="question"><span>04 · Buying process</span><h3>Who appoints, approves and pays for the work?</h3></article>
       </div>
     </section>
 
     <section class="section">
       <div class="split">
         <div>
-          <p class="section-kicker">Who should take part</p>
-          <h2>People close enough to a decision to know what being wrong costs.</h2>
+          <p class="section-kicker">Who the study is for</p>
+          <h2>People carrying operating risk without a full internal operating bench.</h2>
         </div>
-        <div class="body-copy">
-          <p>The diagnostic is designed for a current or recent physical-asset decision. It is most useful when answered with a particular investment, refinancing, acquisition, concession, terminal, fleet, plant, transport operation or infrastructure platform in mind.</p>
+        <div class="body">
+          <p>The most useful participants have recently made, reviewed or financed a decision involving a port, terminal, vessel, fleet, plant, transport network or other operating asset.</p>
         </div>
       </div>
-
-      <div class="audience-grid">
-        <article class="audience-card"><span>Capital</span><h3>Funds, portfolio managers and investment committees</h3></article>
-        <article class="audience-card"><span>Credit</span><h3>Banks, private lenders and restructuring teams</h3></article>
-        <article class="audience-card"><span>Ownership</span><h3>Boards, asset owners and operating executives</h3></article>
+      <div class="audience">
+        <article class="card"><span>Credit</span><h3>Lenders and special-situations teams</h3></article>
+        <article class="card"><span>Capital</span><h3>Infrastructure investors and portfolio teams</h3></article>
+        <article class="card"><span>Governance</span><h3>Boards and owners without sector operators in-house</h3></article>
       </div>
     </section>
 
     <section class="section">
-      <div class="privacy-panel">
-        <h2>Private by design.</h2>
-        <p>Participation is invitation-only. Access is approved personally. The study is being used to shape a focused advisory product, understand the circumstances in which it is useful, and establish sensible scope and pricing. Responses are reviewed privately and are not published with names or organisations attached.</p>
+      <div class="notice">
+        <h2>How information is handled.</h2>
+        <p>Participation is by invitation. Contact details are used only to manage access and follow-up. Responses are reviewed privately and are not published with names or organisations attached. Participants may ask for their information to be corrected or deleted.</p>
       </div>
     </section>
 
     <section class="cta">
-      <p class="section-kicker">Invitation required</p>
-      <h2>Answer it against something real.</h2>
-      <p>The diagnostic takes about five minutes. Request private access, and Ryan will review the request before issuing a code.</p>
-      <a class="button" id="participate" href="https://script.google.com/macros/s/AKfycbxmjJKL8TU71GAS5rvYFQOzCng3Hs8PxWNHsowkTD5Oq_1MI9GMk_4heNbk0fpYg5RN4w/exec" rel="nofollow">Take part privately</a>
+      <p class="section-kicker">Study revision in progress</p>
+      <h2>New responses are temporarily paused.</h2>
+      <p>The questionnaire is being revised following an independent red-team review. Existing participants may continue through the private access page. New invitations will reopen after the research instrument and data controls have been tested.</p>
+      <span class="status">Invitation intake paused</span>
     </section>
 
     <footer>
       <span>Harbour Line Advisory</span>
-      <span>Private international market study · 2026</span>
+      <span>Private market research · 2026</span>
     </footer>
   </main>
-
-  <script>
-    (() => {
-      const tracker = 'https://script.google.com/macros/s/AKfycbxmjJKL8TU71GAS5rvYFQOzCng3Hs8PxWNHsowkTD5Oq_1MI9GMk_4heNbk0fpYg5RN4w/exec';
-      const params = new URLSearchParams(window.location.search);
-      const referralId = (params.get('r') || '').replace(/[^a-zA-Z0-9-]/g, '').slice(0, 80);
-      const button = document.getElementById('participate');
-
-      const ping = (action, extra = {}) => {
-        if (!referralId) return;
-        const query = new URLSearchParams({ action, id: referralId, ...extra });
-        fetch(`${tracker}?${query.toString()}`, { mode: 'no-cors', keepalive: true }).catch(() => {});
-      };
-
-      if (referralId) {
-        button.href = `${tracker}?r=${encodeURIComponent(referralId)}`;
-        ping('track-open', { page: 'study' });
-      }
-
-      button.addEventListener('click', () => ping('track-click', { page: 'study' }));
-    })();
-  </script>
 </body>
 </html>
