@@ -4,391 +4,175 @@
   <base target="_top">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta name="referrer" content="no-referrer">
   <title>Private access | Harbour Line Advisory</title>
   <style>
-    :root {
-      --ink: #11212d;
-      --navy: #1b2733;
-      --teal: #0e6a6a;
-      --aqua: #8bc5bf;
-      --slate: #52616f;
-      --line: #d8dee4;
-      --paper: #f8fbfb;
-      --white: #ffffff;
-      --error: #8f2d2d;
-      --gold: #bd9351;
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      min-width: 320px;
-      color: var(--ink);
-      background:
-        radial-gradient(circle at 90% 8%, rgba(139, 197, 191, .18), transparent 24rem),
-        var(--paper);
-      font-family: Arial, Helvetica, sans-serif;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    .shell {
-      width: min(100%, 1160px);
-      min-height: 100svh;
-      margin: 0 auto;
-      padding: clamp(26px, 5vw, 58px) clamp(22px, 6vw, 82px) 28px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .brand {
-      color: inherit;
-      text-decoration: none;
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 28px;
-      padding-bottom: 18px;
-      border-bottom: 3px solid var(--ink);
-    }
-
-    .brand-name {
-      font-family: Georgia, "Times New Roman", serif;
-      font-weight: 700;
-      font-size: clamp(1.6rem, 3vw, 2.6rem);
-      letter-spacing: -.04em;
-    }
-
-    .brand-note {
-      color: var(--teal);
-      text-transform: uppercase;
-      letter-spacing: .11em;
-      font-size: .72rem;
-      font-weight: 700;
-      text-align: right;
-    }
-
-    .line {
-      height: 30px;
-      margin-top: 9px;
-      border-top: 2px solid var(--aqua);
-      border-bottom: 1px solid var(--line);
-      opacity: .7;
-      transform: skewY(-.48deg);
-    }
-
-    .content {
-      display: grid;
-      grid-template-columns: minmax(0, .84fr) minmax(340px, 1.08fr);
-      gap: clamp(44px, 8vw, 100px);
-      padding: clamp(58px, 10vh, 108px) 0 68px;
-      align-items: start;
-    }
-
-    .eyebrow {
-      color: var(--teal);
-      text-transform: uppercase;
-      font-weight: 700;
-      letter-spacing: .14em;
-      font-size: .75rem;
-      margin: 0 0 18px;
-    }
-
-    h1, h2 {
-      font-family: Georgia, "Times New Roman", serif;
-      font-weight: 400;
-      letter-spacing: -.045em;
-    }
-
-    h1 {
-      font-size: clamp(3rem, 6.2vw, 6rem);
-      line-height: .96;
-      margin: 0;
-    }
-
-    h2 {
-      font-size: clamp(2rem, 3.4vw, 2.8rem);
-      margin: 0 0 10px;
-    }
-
-    .intro,
-    .copy,
-    .privacy,
-    .status {
-      color: var(--slate);
-      line-height: 1.56;
-    }
-
-    .intro {
-      max-width: 500px;
-      margin: 28px 0 0;
-      font-size: 1.05rem;
-    }
-
-    .introduced {
-      max-width: 500px;
-      margin: 26px 0 0;
-      padding: 17px 18px;
-      border-left: 4px solid var(--gold);
-      background: rgba(255, 255, 255, .72);
-      color: var(--slate);
-      line-height: 1.5;
-    }
-
-    .introduced strong { color: var(--ink); }
-
-    .panel {
-      background: var(--white);
-      border: 1px solid var(--line);
-      box-shadow: 0 20px 52px rgba(17, 33, 45, .09);
-      padding: clamp(24px, 4vw, 42px);
-    }
-
-    .tabs {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      border-bottom: 1px solid var(--line);
-      margin: -8px 0 30px;
-    }
-
-    .tab {
-      border: 0;
-      border-bottom: 3px solid transparent;
-      background: transparent;
-      color: var(--slate);
-      padding: 14px 8px;
-      font: inherit;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .tab[aria-selected="true"] {
-      color: var(--ink);
-      border-bottom-color: var(--teal);
-    }
-
-    .pane[hidden] { display: none; }
-
-    label {
-      display: block;
-      margin: 18px 0 7px;
-      font-size: .82rem;
-      font-weight: 700;
-    }
-
-    input {
-      width: 100%;
-      min-height: 50px;
-      border: 1px solid #b8c2ca;
-      border-radius: 2px;
-      padding: 0 14px;
-      font: inherit;
-      color: var(--ink);
-      background: var(--white);
-    }
-
-    input:focus {
-      outline: 3px solid rgba(139, 197, 191, .42);
-      border-color: var(--teal);
-    }
-
-    .honeypot {
-      position: absolute !important;
-      width: 1px !important;
-      height: 1px !important;
-      overflow: hidden !important;
-      clip: rect(1px, 1px, 1px, 1px) !important;
-    }
-
-    .primary {
-      width: 100%;
-      min-height: 53px;
-      margin-top: 26px;
-      border: 1px solid var(--teal);
-      border-radius: 2px;
-      color: var(--white);
-      background: var(--teal);
-      font: inherit;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .primary:hover { background: var(--ink); border-color: var(--ink); }
-    .primary:disabled { opacity: .55; cursor: wait; }
-
-    .status { min-height: 24px; margin: 16px 0 0; font-size: .9rem; }
-    .status.error { color: var(--error); }
-    .privacy { margin-top: 24px; font-size: .78rem; }
-
-    footer {
-      margin-top: auto;
-      padding-top: 20px;
-      border-top: 1px solid var(--line);
-      color: var(--slate);
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      font-size: .8rem;
-    }
-
-    @media (max-width: 790px) {
-      .brand { align-items: flex-start; flex-direction: column; gap: 8px; }
-      .brand-note { text-align: left; }
-      .content { grid-template-columns: 1fr; padding-top: 54px; }
-      footer { flex-direction: column; }
-    }
+    :root{--ink:#11212d;--navy:#1b2733;--teal:#0e6a6a;--aqua:#8bc5bf;--paper:#fbfcfc;--white:#fff;--slate:#52616f;--line:rgba(17,33,45,.16);--error:#9b2c2c}
+    *{box-sizing:border-box}body{margin:0;min-width:320px;color:var(--ink);background:var(--paper);font-family:Arial,Helvetica,sans-serif;-webkit-font-smoothing:antialiased}.shell{width:min(100%,1080px);min-height:100vh;margin:0 auto;padding:30px clamp(22px,7vw,84px);display:flex;flex-direction:column}.topbar{display:flex;justify-content:space-between;gap:24px;align-items:baseline;padding:8px 0 20px;border-bottom:3px solid var(--ink)}.brand{color:inherit;text-decoration:none;font:700 clamp(1.5rem,3vw,2.55rem)/1 Georgia,serif;letter-spacing:-.04em}.label{color:var(--teal);font-size:.73rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase}.line{height:30px;border-top:2px solid var(--aqua);margin-top:12px;opacity:.65}
+    .intro{max-width:790px;padding:58px 0 36px}.eyebrow{margin:0 0 16px;color:var(--teal);font-size:.75rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase}h1{margin:0;font:400 clamp(3.1rem,7vw,6.4rem)/.96 Georgia,serif;letter-spacing:-.05em}.intro p:last-child{max-width:690px;margin:28px 0 0;color:var(--slate);font-size:1.08rem;line-height:1.65}
+    .panel{display:grid;grid-template-columns:220px 1fr;gap:36px;padding:34px 0 60px;border-top:1px solid var(--line)}.tabs{display:grid;align-content:start;gap:8px}.tab{width:100%;padding:14px 16px;border:1px solid var(--line);background:var(--white);color:var(--navy);font:700 .92rem Arial,sans-serif;text-align:left;cursor:pointer}.tab[aria-selected="true"]{color:var(--white);background:var(--navy);border-color:var(--navy)}.content{max-width:660px}.pane[hidden]{display:none}.pane h2{margin:0;font:400 clamp(2rem,4vw,3.4rem)/1 Georgia,serif;letter-spacing:-.04em}.lead{margin:15px 0 26px;color:var(--slate);line-height:1.6}.form{display:grid;gap:17px}.field{display:grid;gap:7px}.field label{color:var(--navy);font-size:.76rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase}.field input{width:100%;padding:14px 15px;border:1px solid var(--line);background:var(--white);color:var(--ink);font:inherit}.field input:focus{outline:3px solid rgba(139,197,191,.45);border-color:var(--teal)}.honeypot{position:absolute;left:-9999px;opacity:0;pointer-events:none}.button{min-height:52px;padding:0 22px;border:1px solid var(--teal);background:var(--teal);color:var(--white);font:700 .95rem Arial,sans-serif;cursor:pointer}.button:hover{background:var(--navy);border-color:var(--navy)}.button:disabled{opacity:.55;cursor:wait}.status{min-height:1.5em;margin:2px 0 0;color:var(--teal);font-weight:700;line-height:1.45}.status.error{color:var(--error)}.privacy{margin:22px 0 0;padding-top:18px;border-top:1px solid var(--line);color:var(--slate);font-size:.88rem;line-height:1.55}footer{display:flex;justify-content:space-between;gap:20px;margin-top:auto;padding:22px 0 4px;border-top:1px solid var(--line);color:var(--slate);font-size:.8rem}
+    @media(max-width:720px){.topbar,footer{align-items:flex-start;flex-direction:column}.panel{grid-template-columns:1fr}.tabs{grid-template-columns:1fr 1fr}.intro{padding-top:46px}}@media(max-width:430px){.tabs{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
   <main class="shell">
-    <header>
-      <a class="brand" href="<?= websiteUrl ?>">
-        <span class="brand-name">Harbour Line Advisory</span>
-        <span class="brand-note">Private study access</span>
-      </a>
-      <div class="line" aria-hidden="true"></div>
+    <header class="topbar">
+      <a class="brand" href="<?= websiteUrl ?>">Harbour Line Advisory</a>
+      <span class="label">Private access</span>
     </header>
+    <div class="line" aria-hidden="true"></div>
 
-    <section class="content">
-      <div>
-        <p class="eyebrow">By invitation</p>
-        <h1>Bring operating reality into the decision.</h1>
-        <p class="intro">Access is issued personally. The diagnostic is designed to be answered against a real physical asset or capital decision, current or recent.</p>
-        <? if (invitedBy) { ?>
-          <p class="introduced">This invitation was introduced by <strong><?= invitedBy ?></strong>.</p>
-        <? } ?>
+    <section class="intro">
+      <p class="eyebrow">By invitation</p>
+      <h1>Private participant access.</h1>
+      <p>Access is reviewed personally. Approved participants receive a code by email and use the same email address when entering.</p>
+    </section>
+
+    <section class="panel">
+      <div class="tabs" role="tablist" aria-label="Access options">
+        <button class="tab" id="request-tab" type="button" role="tab" aria-controls="request-pane" aria-selected="true">Request access</button>
+        <button class="tab" id="code-tab" type="button" role="tab" aria-controls="code-pane" aria-selected="false">Use a code</button>
       </div>
 
-      <div class="panel">
-        <div class="tabs" role="tablist" aria-label="Access options">
-          <button class="tab" type="button" role="tab" id="request-tab" aria-controls="request-pane" aria-selected="true">Request access</button>
-          <button class="tab" type="button" role="tab" id="code-tab" aria-controls="code-pane" aria-selected="false">Use a code</button>
-        </div>
-
+      <div class="content">
         <section class="pane" id="request-pane" role="tabpanel" aria-labelledby="request-tab">
           <h2>Request access</h2>
-          <p class="copy">Provide your details. Ryan reviews each request before a code is activated.</p>
-          <form id="request-form">
-            <input name="referralId" type="hidden" value="<?= referralId ?>">
-
-            <label for="name">Name</label>
-            <input id="name" name="name" type="text" autocomplete="name" maxlength="120" required>
-
-            <label for="organisation">Organisation</label>
-            <input id="organisation" name="organisation" type="text" autocomplete="organization" maxlength="160" required>
-
-            <label for="email">Email</label>
-            <input id="email" name="email" type="email" autocomplete="email" maxlength="254" required>
-
+          <p class="lead">Provide your details. Approved participants receive a private code by email.</p>
+          <form class="form" id="request-form">
+            <div class="field">
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" autocomplete="name" maxlength="120" required>
+            </div>
+            <div class="field">
+              <label for="organisation">Organisation</label>
+              <input id="organisation" name="organisation" type="text" autocomplete="organization" maxlength="160">
+            </div>
+            <div class="field">
+              <label for="request-email">Email</label>
+              <input id="request-email" name="email" type="email" autocomplete="email" maxlength="254" required>
+            </div>
             <div class="honeypot" aria-hidden="true">
               <label for="website">Website</label>
               <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
             </div>
-
-            <button class="primary" id="request-submit" type="submit">Request access</button>
+            <button class="button" id="request-button" type="submit">Request access</button>
             <p class="status" id="request-status" role="status" aria-live="polite"></p>
           </form>
         </section>
 
         <section class="pane" id="code-pane" role="tabpanel" aria-labelledby="code-tab" hidden>
-          <h2>Enter your code</h2>
-          <p class="copy">Use the same email address associated with the approved request.</p>
-          <form id="code-form">
-            <input name="referralId" type="hidden" value="<?= referralId ?>">
-
-            <label for="code-email">Approved email</label>
-            <input id="code-email" name="email" type="email" autocomplete="email" maxlength="254" required>
-
-            <label for="access-code">Access code</label>
-            <input id="access-code" name="code" type="text" autocomplete="one-time-code" maxlength="80" autocapitalize="characters" required>
-
-            <button class="primary" id="code-submit" type="submit">Open diagnostic</button>
-            <p class="status" id="code-status" role="alert" aria-live="polite"></p>
+          <h2>Use your code</h2>
+          <p class="lead">Use the email address attached to the approved request.</p>
+          <form class="form" id="code-form">
+            <div class="field">
+              <label for="approved-email">Approved email</label>
+              <input id="approved-email" name="email" type="email" autocomplete="email" maxlength="254" required>
+            </div>
+            <div class="field">
+              <label for="access-code">Access code</label>
+              <input id="access-code" name="code" type="text" autocomplete="one-time-code" maxlength="80" required>
+            </div>
+            <button class="button" id="code-button" type="submit">Open private material</button>
+            <p class="status" id="code-status" role="status" aria-live="polite"></p>
           </form>
         </section>
 
-        <p class="privacy">Submitted details are used only to manage access and attribute the invitation journey. Responses remain private.</p>
+        <p class="privacy">Submitted details are used to manage access and follow-up. Do not submit confidential transaction, customer, employee or asset information on this page.</p>
       </div>
     </section>
 
     <footer>
-      <span>Private.</span>
-      <span>By invitation.</span>
+      <span>Harbour Line Advisory</span>
+      <span>Access is reviewed personally</span>
     </footer>
   </main>
 
   <script>
-    const requestTab = document.getElementById('request-tab');
-    const codeTab = document.getElementById('code-tab');
-    const requestPane = document.getElementById('request-pane');
-    const codePane = document.getElementById('code-pane');
-    const initialTab = '<?= initialTab ?>';
+    (() => {
+      const requestTab = document.getElementById('request-tab');
+      const codeTab = document.getElementById('code-tab');
+      const requestPane = document.getElementById('request-pane');
+      const codePane = document.getElementById('code-pane');
 
-    function selectTab(which) {
-      const requestSelected = which === 'request';
-      requestTab.setAttribute('aria-selected', String(requestSelected));
-      codeTab.setAttribute('aria-selected', String(!requestSelected));
-      requestPane.hidden = !requestSelected;
-      codePane.hidden = requestSelected;
-      const target = requestSelected ? document.getElementById('name') : document.getElementById('code-email');
-      window.setTimeout(() => target.focus(), 50);
-    }
+      const show = (name) => {
+        const requestActive = name !== 'code';
+        requestTab.setAttribute('aria-selected', String(requestActive));
+        codeTab.setAttribute('aria-selected', String(!requestActive));
+        requestPane.hidden = !requestActive;
+        codePane.hidden = requestActive;
+      };
 
-    requestTab.addEventListener('click', () => selectTab('request'));
-    codeTab.addEventListener('click', () => selectTab('code'));
-    if (initialTab === 'code') selectTab('code');
+      requestTab.addEventListener('click', () => show('request'));
+      codeTab.addEventListener('click', () => show('code'));
 
-    document.getElementById('request-form').addEventListener('submit', (event) => {
-      event.preventDefault();
-      const button = document.getElementById('request-submit');
-      const status = document.getElementById('request-status');
-      const payload = Object.fromEntries(new FormData(event.currentTarget).entries());
-      button.disabled = true;
-      status.className = 'status';
-      status.textContent = 'Recording your request…';
+      <? if (initialTab === 'code') { ?>
+        show('code');
+      <? } ?>
 
-      google.script.run
-        .withSuccessHandler((result) => {
-          button.disabled = false;
-          status.textContent = result.message;
-          event.currentTarget.reset();
-        })
-        .withFailureHandler((error) => {
-          button.disabled = false;
-          status.className = 'status error';
-          status.textContent = error && error.message ? error.message : 'The request could not be recorded. Please try again.';
-        })
-        .requestAccess(payload);
-    });
+      const setStatus = (element, message, error = false) => {
+        element.textContent = message || '';
+        element.classList.toggle('error', error);
+      };
 
-    document.getElementById('code-form').addEventListener('submit', (event) => {
-      event.preventDefault();
-      const button = document.getElementById('code-submit');
-      const status = document.getElementById('code-status');
-      const payload = Object.fromEntries(new FormData(event.currentTarget).entries());
-      button.disabled = true;
-      status.className = 'status';
-      status.textContent = 'Checking access…';
+      document.getElementById('request-form').addEventListener('submit', (event) => {
+        event.preventDefault();
+        const button = document.getElementById('request-button');
+        const status = document.getElementById('request-status');
+        const form = event.currentTarget;
 
-      google.script.run
-        .withSuccessHandler((result) => {
-          if (result.ok) {
-            status.textContent = 'Access confirmed.';
-            window.location.assign(result.url);
-            return;
-          }
-          button.disabled = false;
-          status.className = 'status error';
-          status.textContent = result.message;
-        })
-        .withFailureHandler(() => {
-          button.disabled = false;
-          status.className = 'status error';
-          status.textContent = 'Access could not be checked. Please try again.';
-        })
-        .verifyAccess(payload);
-    });
+        if (!form.reportValidity()) return;
+        button.disabled = true;
+        setStatus(status, 'Submitting…');
+
+        google.script.run
+          .withSuccessHandler((result) => {
+            button.disabled = false;
+            setStatus(status, result && result.message ? result.message : 'Your request has been recorded.');
+            form.reset();
+          })
+          .withFailureHandler((error) => {
+            button.disabled = false;
+            setStatus(status, error && error.message ? error.message : 'The request could not be submitted.', true);
+          })
+          .requestAccess({
+            name: document.getElementById('name').value,
+            organisation: document.getElementById('organisation').value,
+            email: document.getElementById('request-email').value,
+            website: document.getElementById('website').value,
+          });
+      });
+
+      document.getElementById('code-form').addEventListener('submit', (event) => {
+        event.preventDefault();
+        const button = document.getElementById('code-button');
+        const status = document.getElementById('code-status');
+        const form = event.currentTarget;
+
+        if (!form.reportValidity()) return;
+        button.disabled = true;
+        setStatus(status, 'Checking…');
+
+        google.script.run
+          .withSuccessHandler((result) => {
+            button.disabled = false;
+            if (result && result.ok && result.url) {
+              setStatus(status, 'Access confirmed. Opening…');
+              window.top.location.href = result.url;
+              return;
+            }
+            setStatus(status, result && result.message ? result.message : 'Access was not recognised.', true);
+          })
+          .withFailureHandler(() => {
+            button.disabled = false;
+            setStatus(status, 'Access could not be checked. Please try again.', true);
+          })
+          .verifyAccess({
+            email: document.getElementById('approved-email').value,
+            code: document.getElementById('access-code').value,
+          });
+      });
+    })();
   </script>
 </body>
 </html>
