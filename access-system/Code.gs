@@ -62,7 +62,7 @@ function setup() {
   getAccessSheet_();
   getReferralSheet_();
   ensureCollaboratorPasscode_();
-  return 'Harbour Line access and referral system is ready. A collaborator passcode has been emailed if one did not already exist.';
+  return 'Harbour Line access and referral system is ready.';
 }
 
 function resetCollaboratorPasscode() {
@@ -77,7 +77,7 @@ function doGet(e) {
   const action = clean_(params.action, 30).toLowerCase();
   const page = clean_(params.page, 30).toLowerCase();
 
-  if (['approve', 'approve-send', 'reject'].includes(action)) {
+  if (['approve', 'reject'].includes(action)) {
     return handleAdminDecision_(params);
   }
 
@@ -114,8 +114,16 @@ function collaboratorLogin(passcode) {
   }
 
   const token = secureToken_();
-  CacheService.getScriptCache().put('COLLAB_' + sha256_(token), '1', CONFIG.COLLABORATOR_SESSION_SECONDS);
-  return { ok: true, token, expiresHours: Math.floor(CONFIG.COLLABORATOR_SESSION_SECONDS / 3600) };
+  CacheService.getScriptCache().put(
+    'COLLAB_' + sha256_(token),
+    '1',
+    CONFIG.COLLABORATOR_SESSION_SECONDS
+  );
+  return {
+    ok: true,
+    token,
+    expiresHours: Math.floor(CONFIG.COLLABORATOR_SESSION_SECONDS / 3600),
+  };
 }
 
 function createReferral(sessionToken, payload) {
@@ -130,7 +138,9 @@ function createReferral(sessionToken, payload) {
   if (!senderName) throw new Error('Enter your name.');
   if (!isValidEmail_(senderEmail)) throw new Error('Enter a valid sender email.');
   if (!recipientName) throw new Error('Enter the intended recipient’s name.');
-  if (recipientEmail && !isValidEmail_(recipientEmail)) throw new Error('Enter a valid recipient email or leave it blank.');
+  if (recipientEmail && !isValidEmail_(recipientEmail)) {
+    throw new Error('Enter a valid recipient email or leave it blank.');
+  }
 
   const id = Utilities.getUuid();
   const now = new Date();
@@ -160,7 +170,11 @@ function createReferral(sessionToken, payload) {
     '',
   ]);
 
-  return { ok: true, id, link: CONFIG.STUDY_URL + '?r=' + encodeURIComponent(id) };
+  return {
+    ok: true,
+    id,
+    link: CONFIG.STUDY_URL + '?r=' + encodeURIComponent(id),
+  };
 }
 
 function recordReferralShare(sessionToken, referralId, channel) {
@@ -205,8 +219,20 @@ function requestAccess(payload) {
       const rowEmail = normalizeEmail_(rows[i][COL.EMAIL - 1]);
       const requestedAt = new Date(rows[i][COL.REQUESTED_AT - 1]);
       const status = String(rows[i][COL.STATUS - 1] || '').toUpperCase();
-      if (rowEmail === email && ['PENDING', 'APPROVED'].includes(status) && now - requestedAt < cooldownMs) {
-        if (referralId) updateReferralAccess_(referralId, String(rows[i][COL.REQUEST_ID - 1] || ''), name, email);
+
+      if (
+        rowEmail === email &&
+        ['PENDING', 'APPROVED'].includes(status) &&
+        now - requestedAt < cooldownMs
+      ) {
+        if (referralId) {
+          updateReferralAccess_(
+            referralId,
+            String(rows[i][COL.REQUEST_ID - 1] || ''),
+            name,
+            email
+          );
+        }
         return genericRequestResponse_();
       }
     }
@@ -215,7 +241,9 @@ function requestAccess(payload) {
     const code = generateCode_();
     const salt = Utilities.getUuid();
     const codeHash = sha256_(salt + ':' + code);
-    const expires = new Date(now.getTime() + CONFIG.CODE_VALID_DAYS * 24 * 60 * 60 * 1000);
+    const expires = new Date(
+      now.getTime() + CONFIG.CODE_VALID_DAYS * 24 * 60 * 60 * 1000
+    );
     const source = referralId ? 'Referral:' + referralId : 'Website';
 
     sheet.appendRow([
@@ -235,13 +263,22 @@ function requestAccess(payload) {
       salt,
     ]);
 
-    const properties = PropertiesService.getScriptProperties();
-    properties.setProperty('CODE_' + requestId, code);
+    PropertiesService.getScriptProperties().setProperty('CODE_' + requestId, code);
     if (referralId) updateReferralAccess_(referralId, requestId, name, email);
 
     const approval = createApprovalTokens_(requestId);
     const referral = referralId ? getReferralContext_(referralId) : null;
-    sendOwnerNotification_({ requestId, name, organisation, email, code, expires, approval, referralId, referral });
+    sendOwnerNotification_({
+      requestId,
+      name,
+      organisation,
+      email,
+      expires,
+      approval,
+      referralId,
+      referral,
+    });
+
     return genericRequestResponse_();
   } finally {
     lock.releaseLock();
@@ -254,11 +291,17 @@ function verifyAccess(payload) {
   const suppliedReferralId = clean_(payload && payload.referralId, 80);
 
   if (!isValidEmail_(email) || !code) {
-    return { ok: false, message: 'That email and access code combination is not recognised.' };
+    return {
+      ok: false,
+      message: 'That email and access code combination is not recognised.',
+    };
   }
 
   if (isTemporarilyLocked_(email)) {
-    return { ok: false, message: 'Too many unsuccessful attempts. Please try again in 15 minutes.' };
+    return {
+      ok: false,
+      message: 'Too many unsuccessful attempts. Please try again in 15 minutes.',
+    };
   }
 
   const lock = LockService.getScriptLock();
@@ -302,12 +345,18 @@ function verifyAccess(payload) {
       const hidden = [];
       if (requestId) hidden.push('request_id=' + encodeURIComponent(requestId));
       if (referralId) hidden.push('referral_id=' + encodeURIComponent(referralId));
-      const url = hidden.length ? CONFIG.TYPEFORM_URL + '#' + hidden.join('&') : CONFIG.TYPEFORM_URL;
+      const url = hidden.length
+        ? CONFIG.TYPEFORM_URL + '#' + hidden.join('&')
+        : CONFIG.TYPEFORM_URL;
+
       return { ok: true, url };
     }
 
     recordFailedAttempt_(email);
-    return { ok: false, message: 'That email and access code combination is not recognised.' };
+    return {
+      ok: false,
+      message: 'That email and access code combination is not recognised.',
+    };
   } finally {
     lock.releaseLock();
   }
@@ -318,8 +367,16 @@ function handleAdminDecision_(params) {
   const action = clean_(params && params.action, 30).toLowerCase();
   const token = clean_(params && params.token, 240);
 
-  if (!requestId || !['approve', 'approve-send', 'reject'].includes(action) || !validateApprovalToken_(requestId, action, token)) {
-    return adminPage_('Access denied', 'This approval link is invalid, expired or has already been used.', false);
+  if (
+    !requestId ||
+    !['approve', 'reject'].includes(action) ||
+    !validateApprovalToken_(requestId, action, token)
+  ) {
+    return adminPage_(
+      'Access denied',
+      'This decision link is invalid, expired or has already been used.',
+      false
+    );
   }
 
   const lock = LockService.getScriptLock();
@@ -358,26 +415,39 @@ function handleAdminDecision_(params) {
 
     if (action === 'reject') {
       sheet.getRange(rowNumber, COL.STATUS).setValue('REJECTED');
-      sheet.getRange(rowNumber, COL.DECISION_NOTE).setValue('Rejected by Ryan');
+      sheet.getRange(rowNumber, COL.DECISION_NOTE).setValue('Declined by Ryan');
       PropertiesService.getScriptProperties().deleteProperty('CODE_' + requestId);
       consumeApprovalTokens_(requestId);
       if (referralId) setReferralStatus_(referralId, 'REJECTED');
-      return adminPage_('Request rejected', email + ' will not be able to use the generated code.', true);
+
+      return adminPage_(
+        'Request declined',
+        'No access code was sent to ' + email + '.',
+        true
+      );
+    }
+
+    if (!code) {
+      consumeApprovalTokens_(requestId);
+      return adminPage_(
+        'Code unavailable',
+        'The request was not approved because its code could not be recovered. Ask the participant to request access again.',
+        false
+      );
     }
 
     sheet.getRange(rowNumber, COL.STATUS).setValue('APPROVED');
     sheet.getRange(rowNumber, COL.APPROVED_AT).setValue(new Date());
-    sheet.getRange(rowNumber, COL.DECISION_NOTE).setValue(action === 'approve-send' ? 'Approved; code emailed automatically' : 'Approved; Ryan to send code');
+    sheet.getRange(rowNumber, COL.DECISION_NOTE).setValue('Approved; code emailed automatically');
     consumeApprovalTokens_(requestId);
     if (referralId) setReferralStatus_(referralId, 'APPROVED');
 
-    if (action === 'approve-send') {
-      if (!code) return adminPage_('Approved', 'The request was approved, but the code could not be recovered. Ask the visitor to request access again.', false);
-      sendVisitorCode_(email, name, code, referralId);
-      return adminPage_('Approved and sent', 'The access code has been emailed to ' + email + '.', true);
-    }
-
-    return adminPage_('Request approved', 'The code is active. Send it only to ' + email + '.', true, code || '[code unavailable; request again]');
+    sendVisitorCode_(email, name, code, referralId);
+    return adminPage_(
+      'Approved and sent',
+      'Harbour Line has automatically emailed the access code to ' + email + '.',
+      true
+    );
   } finally {
     lock.releaseLock();
   }
@@ -393,7 +463,9 @@ function trackPublicReferralEvent_(action, params) {
 
   if (action === 'track-open') {
     const opens = Number(record.row[REFCOL.OPENS - 1] || 0) + 1;
-    if (!record.row[REFCOL.FIRST_OPENED_AT - 1]) sheet.getRange(record.rowNumber, REFCOL.FIRST_OPENED_AT).setValue(now);
+    if (!record.row[REFCOL.FIRST_OPENED_AT - 1]) {
+      sheet.getRange(record.rowNumber, REFCOL.FIRST_OPENED_AT).setValue(now);
+    }
     sheet.getRange(record.rowNumber, REFCOL.OPENS).setValue(opens);
     sheet.getRange(record.rowNumber, REFCOL.LAST_OPENED_AT).setValue(now);
     sheet.getRange(record.rowNumber, REFCOL.STATUS).setValue('OPENED');
@@ -413,7 +485,10 @@ function updateReferralAccess_(referralId, requestId, requesterName, requesterEm
   if (!record) return;
 
   const intendedEmail = normalizeEmail_(record.row[REFCOL.RECIPIENT_EMAIL - 1]);
-  const mismatch = intendedEmail && requesterEmail && intendedEmail !== normalizeEmail_(requesterEmail) ? 'YES' : '';
+  const mismatch =
+    intendedEmail && requesterEmail && intendedEmail !== normalizeEmail_(requesterEmail)
+      ? 'YES'
+      : '';
   const sheet = getReferralSheet_();
   sheet.getRange(record.rowNumber, REFCOL.ACCESS_REQUESTED_AT).setValue(new Date());
   sheet.getRange(record.rowNumber, REFCOL.REQUEST_ID).setValue(requestId);
@@ -429,13 +504,17 @@ function markReferralFormEntered_(referralId, requestId, requesterEmail) {
   const sheet = getReferralSheet_();
   sheet.getRange(record.rowNumber, REFCOL.FORM_ENTERED_AT).setValue(new Date());
   if (requestId) sheet.getRange(record.rowNumber, REFCOL.REQUEST_ID).setValue(requestId);
-  if (requesterEmail) sheet.getRange(record.rowNumber, REFCOL.REQUESTER_EMAIL).setValue(requesterEmail);
+  if (requesterEmail) {
+    sheet.getRange(record.rowNumber, REFCOL.REQUESTER_EMAIL).setValue(requesterEmail);
+  }
   sheet.getRange(record.rowNumber, REFCOL.STATUS).setValue('FORM_ENTERED');
 }
 
 function setReferralStatus_(referralId, status) {
   const record = getReferralRow_(referralId);
-  if (record) getReferralSheet_().getRange(record.rowNumber, REFCOL.STATUS).setValue(status);
+  if (record) {
+    getReferralSheet_().getRange(record.rowNumber, REFCOL.STATUS).setValue(status);
+  }
 }
 
 function getReferralContext_(referralId) {
@@ -456,14 +535,18 @@ function getReferralRow_(referralId) {
   const sheet = getReferralSheet_();
   const rows = sheet.getDataRange().getValues();
   for (let i = 1; i < rows.length; i += 1) {
-    if (String(rows[i][REFCOL.REFERRAL_ID - 1]) === referralId) return { rowNumber: i + 1, row: rows[i] };
+    if (String(rows[i][REFCOL.REFERRAL_ID - 1]) === referralId) {
+      return { rowNumber: i + 1, row: rows[i] };
+    }
   }
   return null;
 }
 
 function requireCollaboratorSession_(token) {
   const cleanToken = clean_(token, 160);
-  const valid = cleanToken && CacheService.getScriptCache().get('COLLAB_' + sha256_(cleanToken)) === '1';
+  const valid =
+    cleanToken &&
+    CacheService.getScriptCache().get('COLLAB_' + sha256_(cleanToken)) === '1';
   if (!valid) throw new Error('Your collaborator session has expired. Sign in again.');
 }
 
@@ -476,20 +559,27 @@ function ensureCollaboratorPasscode_() {
 }
 
 function generateCollaboratorPasscode_() {
-  return 'HLA-' + String(Math.floor(100000 + Math.random() * 900000)) + '-' + secureToken_().slice(0, 6).toUpperCase();
+  return (
+    'HLA-' +
+    String(Math.floor(100000 + Math.random() * 900000)) +
+    '-' +
+    secureToken_().slice(0, 6).toUpperCase()
+  );
 }
 
 function sendCollaboratorPasscode_(passcode, reset) {
   MailApp.sendEmail({
     to: CONFIG.OWNER_EMAIL,
-    subject: reset ? 'New Harbour Line collaborator passcode' : 'Harbour Line collaborator passcode',
+    subject: reset
+      ? 'New Harbour Line collaborator passcode'
+      : 'Harbour Line collaborator passcode',
     body: [
       'Your private collaborator console is ready.',
       '',
       'Console: ' + ScriptApp.getService().getUrl() + '?page=collaborator',
       'Passcode: ' + passcode,
       '',
-      'Share the passcode only with trusted collaborators. You can reset it by running resetCollaboratorPasscode in Apps Script.',
+      'Share the passcode only with trusted collaborators.',
     ].join('\n'),
     name: 'Harbour Line Advisory',
   });
@@ -497,28 +587,35 @@ function sendCollaboratorPasscode_(passcode, reset) {
 
 function createApprovalTokens_(requestId) {
   const expiresAt = Date.now() + CONFIG.ADMIN_TOKEN_HOURS * 60 * 60 * 1000;
-  const raw = { approve: secureToken_(), 'approve-send': secureToken_(), reject: secureToken_() };
-  PropertiesService.getScriptProperties().setProperty('ADMIN_' + requestId, JSON.stringify({
-    expiresAt,
-    hashes: {
-      approve: sha256_(raw.approve),
-      'approve-send': sha256_(raw['approve-send']),
-      reject: sha256_(raw.reject),
-    },
-  }));
+  const raw = {
+    approve: secureToken_(),
+    reject: secureToken_(),
+  };
+
+  PropertiesService.getScriptProperties().setProperty(
+    'ADMIN_' + requestId,
+    JSON.stringify({
+      expiresAt,
+      hashes: {
+        approve: sha256_(raw.approve),
+        reject: sha256_(raw.reject),
+      },
+    })
+  );
   return raw;
 }
 
 function validateApprovalToken_(requestId, action, token) {
   const value = PropertiesService.getScriptProperties().getProperty('ADMIN_' + requestId);
   if (!value || !token) return false;
+
   try {
     const record = JSON.parse(value);
     if (!record.expiresAt || Date.now() > Number(record.expiresAt)) {
       consumeApprovalTokens_(requestId);
       return false;
     }
-    return record.hashes && record.hashes[action] === sha256_(token);
+    return Boolean(record.hashes && record.hashes[action] === sha256_(token));
   } catch (error) {
     consumeApprovalTokens_(requestId);
     return false;
@@ -531,52 +628,66 @@ function consumeApprovalTokens_(requestId) {
 
 function sendOwnerNotification_(request) {
   const serviceUrl = ScriptApp.getService().getUrl();
-  const approve = adminUrl_(serviceUrl, 'approve', request.requestId, request.approval.approve);
-  const approveSend = adminUrl_(serviceUrl, 'approve-send', request.requestId, request.approval['approve-send']);
-  const reject = adminUrl_(serviceUrl, 'reject', request.requestId, request.approval.reject);
+  const approve = adminUrl_(
+    serviceUrl,
+    'approve',
+    request.requestId,
+    request.approval.approve
+  );
+  const reject = adminUrl_(
+    serviceUrl,
+    'reject',
+    request.requestId,
+    request.approval.reject
+  );
   const displayName = request.name || 'Name not supplied';
   const organisation = request.organisation || 'Organisation not supplied';
-  const introducer = request.referral && request.referral.senderName ? request.referral.senderName : 'Direct website request';
-  const intendedRecipient = request.referral && request.referral.recipientName ? request.referral.recipientName : '';
+  const introducer =
+    request.referral && request.referral.senderName
+      ? request.referral.senderName
+      : 'Direct website request';
+  const intendedRecipient =
+    request.referral && request.referral.recipientName
+      ? request.referral.recipientName
+      : '';
 
   const body = [
-    'A visitor has requested access to Harbour Line.',
+    'A participant has requested access to the Harbour Line study.',
     '',
     'Name: ' + displayName,
     'Organisation: ' + organisation,
     'Email: ' + request.email,
     'Introduced by: ' + introducer,
     intendedRecipient ? 'Intended recipient: ' + intendedRecipient : '',
-    'Generated code: ' + request.code,
-    'Code expires: ' + request.expires,
     '',
-    'Approve only: ' + approve,
-    'Approve and email the code: ' + approveSend,
-    'Reject: ' + reject,
+    'YES — approve and send code automatically: ' + approve,
+    'NO — decline access: ' + reject,
+    '',
+    'The decision links expire in ' + CONFIG.ADMIN_TOKEN_HOURS + ' hours and work once.',
   ].filter(Boolean).join('\n');
 
   const htmlBody = `
-    <div style="font-family:Arial,sans-serif;color:#1b2733;line-height:1.5;max-width:620px">
-      <h2 style="font-family:Georgia,serif;margin-bottom:8px">Harbour Line access request</h2>
-      <p style="color:#52616f">A visitor has requested private study access.</p>
+    <div style="font-family:Arial,sans-serif;color:#1b2733;line-height:1.5;max-width:640px">
+      <p style="color:#0e6a6a;text-transform:uppercase;letter-spacing:.12em;font-size:12px;font-weight:bold">Harbour Line Advisory</p>
+      <h2 style="font-family:Georgia,serif;font-weight:400;margin:0 0 8px">Access decision required</h2>
+      <p style="color:#52616f">A participant has requested private study access.</p>
       <table style="border-collapse:collapse;width:100%;margin:22px 0">
         <tr><td style="padding:7px 0;color:#52616f">Name</td><td style="padding:7px 0"><strong>${escapeHtml_(displayName)}</strong></td></tr>
         <tr><td style="padding:7px 0;color:#52616f">Organisation</td><td style="padding:7px 0"><strong>${escapeHtml_(organisation)}</strong></td></tr>
         <tr><td style="padding:7px 0;color:#52616f">Email</td><td style="padding:7px 0"><strong>${escapeHtml_(request.email)}</strong></td></tr>
         <tr><td style="padding:7px 0;color:#52616f">Introduced by</td><td style="padding:7px 0"><strong>${escapeHtml_(introducer)}</strong></td></tr>
-        <tr><td style="padding:7px 0;color:#52616f">Generated code</td><td style="padding:7px 0;font-family:monospace;font-size:16px"><strong>${escapeHtml_(request.code)}</strong></td></tr>
+        ${intendedRecipient ? `<tr><td style="padding:7px 0;color:#52616f">Intended recipient</td><td style="padding:7px 0"><strong>${escapeHtml_(intendedRecipient)}</strong></td></tr>` : ''}
       </table>
-      <p>
-        <a href="${approveSend}" style="display:inline-block;background:#0e6a6a;color:#fff;text-decoration:none;padding:12px 16px;margin:0 8px 8px 0">Approve and send</a>
-        <a href="${approve}" style="display:inline-block;background:#1b2733;color:#fff;text-decoration:none;padding:12px 16px;margin:0 8px 8px 0">Approve only</a>
-        <a href="${reject}" style="display:inline-block;border:1px solid #9b2c2c;color:#9b2c2c;text-decoration:none;padding:11px 16px;margin-bottom:8px">Reject</a>
+      <p style="margin:28px 0 12px">
+        <a href="${approve}" style="display:inline-block;background:#0e6a6a;color:#fff;text-decoration:none;padding:14px 18px;margin:0 10px 10px 0;font-weight:bold">YES — APPROVE &amp; SEND</a>
+        <a href="${reject}" style="display:inline-block;border:1px solid #9b2c2c;color:#9b2c2c;text-decoration:none;padding:13px 18px;margin-bottom:10px;font-weight:bold">NO — DECLINE</a>
       </p>
-      <p style="font-size:12px;color:#52616f">These links expire in ${CONFIG.ADMIN_TOKEN_HOURS} hours and stop working after one decision. Do not forward this email.</p>
+      <p style="font-size:12px;color:#52616f">Choosing YES immediately emails the participant a private code and access link. You do not need to send anything yourself. These links expire in ${CONFIG.ADMIN_TOKEN_HOURS} hours and stop working after one decision. Do not forward this email.</p>
     </div>`;
 
   MailApp.sendEmail({
     to: CONFIG.OWNER_EMAIL,
-    subject: 'Harbour Line access request: ' + request.email,
+    subject: 'ACTION REQUIRED — Harbour Line access: ' + displayName,
     body,
     htmlBody,
     name: 'Harbour Line Advisory',
@@ -588,33 +699,52 @@ function sendVisitorCode_(email, name, code, referralId) {
   const greeting = name ? 'Hello ' + name + ',' : 'Hello,';
   let portalUrl = ScriptApp.getService().getUrl() + '?tab=code';
   if (referralId) portalUrl += '&r=' + encodeURIComponent(referralId);
+
   const body = [
     greeting,
     '',
-    'Your Harbour Line study access request has been approved.',
+    'Your request to take part in the Harbour Line Operating Reality Study has been approved.',
     '',
-    'Use the same email address and this code:',
+    'Use the same email address you submitted and this private access code:',
     code,
     '',
-    'Private access page: ' + portalUrl,
+    'Open the private access page:',
+    portalUrl,
     '',
     'The code expires after seven days and allows up to three successful entries.',
     '',
-    'Ryan Dermody',
     'Harbour Line Advisory',
   ].join('\n');
 
+  const htmlBody = `
+    <div style="font-family:Arial,sans-serif;color:#1b2733;line-height:1.6;max-width:620px">
+      <p style="color:#0e6a6a;text-transform:uppercase;letter-spacing:.12em;font-size:12px;font-weight:bold">Harbour Line Advisory</p>
+      <h2 style="font-family:Georgia,serif;font-weight:400">Your private access has been approved</h2>
+      <p>${escapeHtml_(greeting)}</p>
+      <p>Your request to take part in the Harbour Line Operating Reality Study has been approved.</p>
+      <p>Use the same email address you submitted and this private access code:</p>
+      <div style="font-family:monospace;font-size:20px;letter-spacing:.04em;background:#f2f5f7;padding:16px;margin:20px 0"><strong>${escapeHtml_(code)}</strong></div>
+      <p><a href="${portalUrl}" style="display:inline-block;background:#0e6a6a;color:#fff;text-decoration:none;padding:13px 18px;font-weight:bold">Open private access</a></p>
+      <p style="font-size:12px;color:#52616f">The code expires after seven days and allows up to three successful entries.</p>
+    </div>`;
+
   MailApp.sendEmail({
     to: email,
-    subject: 'Your Harbour Line access code',
+    subject: 'Your Harbour Line private access code',
     body,
+    htmlBody,
     name: 'Harbour Line Advisory',
     replyTo: CONFIG.OWNER_EMAIL,
   });
 }
 
 function adminUrl_(serviceUrl, action, requestId, token) {
-  return serviceUrl + '?action=' + encodeURIComponent(action) + '&id=' + encodeURIComponent(requestId) + '&token=' + encodeURIComponent(token);
+  return (
+    serviceUrl +
+    '?action=' + encodeURIComponent(action) +
+    '&id=' + encodeURIComponent(requestId) +
+    '&token=' + encodeURIComponent(token)
+  );
 }
 
 function enforceDailyRequestLimit_() {
@@ -622,18 +752,27 @@ function enforceDailyRequestLimit_() {
   const day = Utilities.formatDate(new Date(), CONFIG_TIMEZONE_(), 'yyyyMMdd');
   const key = 'REQUEST_COUNT_' + day;
   const count = Number(properties.getProperty(key) || 0);
-  if (count >= CONFIG.DAILY_REQUEST_LIMIT) throw new Error('The request service is temporarily unavailable. Please try again later.');
+  if (count >= CONFIG.DAILY_REQUEST_LIMIT) {
+    throw new Error('The request service is temporarily unavailable. Please try again later.');
+  }
   properties.setProperty(key, String(count + 1));
 }
 
 function isTemporarilyLocked_(email) {
-  return Number(CacheService.getScriptCache().get(failureKey_(email)) || 0) >= CONFIG.FAILED_ATTEMPT_LIMIT;
+  return (
+    Number(CacheService.getScriptCache().get(failureKey_(email)) || 0) >=
+    CONFIG.FAILED_ATTEMPT_LIMIT
+  );
 }
 
 function recordFailedAttempt_(email) {
   const cache = CacheService.getScriptCache();
   const key = failureKey_(email);
-  cache.put(key, String(Number(cache.get(key) || 0) + 1), CONFIG.FAILED_ATTEMPT_WINDOW_SECONDS);
+  cache.put(
+    key,
+    String(Number(cache.get(key) || 0) + 1),
+    CONFIG.FAILED_ATTEMPT_WINDOW_SECONDS
+  );
 }
 
 function clearFailedAttempts_(email) {
@@ -649,7 +788,22 @@ function getAccessSheet_() {
   let sheet = spreadsheet.getSheetByName(CONFIG.ACCESS_SHEET_NAME);
   if (!sheet) {
     sheet = spreadsheet.insertSheet(CONFIG.ACCESS_SHEET_NAME);
-    sheet.appendRow(['Request ID','Requested at','Name','Organisation','Email','Status','Expires','Approved at','Uses','Last used','Decision note','Source','Code hash','Salt']);
+    sheet.appendRow([
+      'Request ID',
+      'Requested at',
+      'Name',
+      'Organisation',
+      'Email',
+      'Status',
+      'Expires',
+      'Approved at',
+      'Uses',
+      'Last used',
+      'Decision note',
+      'Source',
+      'Code hash',
+      'Salt',
+    ]);
     sheet.setFrozenRows(1);
   }
   return sheet;
@@ -660,14 +814,36 @@ function getReferralSheet_() {
   let sheet = spreadsheet.getSheetByName(CONFIG.REFERRAL_SHEET_NAME);
   if (!sheet) {
     sheet = spreadsheet.insertSheet(CONFIG.REFERRAL_SHEET_NAME);
-    sheet.appendRow(['Referral ID','Created at','Sender name','Sender email','Intended recipient','Intended recipient email','Recipient organisation','Last channel','Share events','Last shared at','First opened at','Opens','Last opened at','CTA clicks','Access requested at','Request ID','Requester name','Requester email','Form entered at','Status','Recipient mismatch']);
+    sheet.appendRow([
+      'Referral ID',
+      'Created at',
+      'Sender name',
+      'Sender email',
+      'Intended recipient',
+      'Intended recipient email',
+      'Recipient organisation',
+      'Last channel',
+      'Share events',
+      'Last shared at',
+      'First opened at',
+      'Opens',
+      'Last opened at',
+      'CTA clicks',
+      'Access requested at',
+      'Request ID',
+      'Requester name',
+      'Requester email',
+      'Form entered at',
+      'Status',
+      'Recipient mismatch',
+    ]);
     sheet.setFrozenRows(1);
   }
   return sheet;
 }
 
 function generateCode_() {
-  const words = ['ANCHOR','BEACON','CHANNEL','HARBOUR','NORTH','QUAY','SOUNDER','TIDE'];
+  const words = ['ANCHOR', 'BEACON', 'CHANNEL', 'HARBOUR', 'NORTH', 'QUAY', 'SOUNDER', 'TIDE'];
   const first = words[Math.floor(Math.random() * words.length)];
   let second = words[Math.floor(Math.random() * words.length)];
   if (second === first) second = 'LINE';
@@ -675,12 +851,21 @@ function generateCode_() {
 }
 
 function secureToken_() {
-  return Utilities.getUuid().replace(/-/g, '') + Utilities.getUuid().replace(/-/g, '');
+  return (
+    Utilities.getUuid().replace(/-/g, '') +
+    Utilities.getUuid().replace(/-/g, '')
+  );
 }
 
 function sha256_(value) {
-  const digest = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, String(value || ''), Utilities.Charset.UTF_8);
-  return digest.map((byte) => ((byte + 256) % 256).toString(16).padStart(2, '0')).join('');
+  const digest = Utilities.computeDigest(
+    Utilities.DigestAlgorithm.SHA_256,
+    String(value || ''),
+    Utilities.Charset.UTF_8
+  );
+  return digest
+    .map((byte) => ((byte + 256) % 256).toString(16).padStart(2, '0'))
+    .join('');
 }
 
 function normalizeEmail_(value) {
@@ -692,24 +877,51 @@ function isValidEmail_(email) {
 }
 
 function clean_(value, maxLength) {
-  return String(value || '').trim().replace(/[<>]/g, '').slice(0, maxLength);
+  return String(value || '')
+    .trim()
+    .replace(/[<>]/g, '')
+    .slice(0, maxLength);
 }
 
 function escapeHtml_(value) {
-  return String(value || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+  return String(value || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
 }
 
 function genericRequestResponse_() {
-  return { ok: true, message: 'Your request has been recorded. Approved participants receive a private code by email.' };
+  return {
+    ok: true,
+    message:
+      'Your request has been recorded for review. If approved, Harbour Line will email your private code directly.',
+  };
 }
 
 function pixelResponse_() {
   return ContentService.createTextOutput('ok').setMimeType(ContentService.MimeType.TEXT);
 }
 
-function adminPage_(title, message, success, code) {
-  const codeBlock = code ? `<div style="font-family:monospace;font-size:20px;letter-spacing:.04em;background:#f2f5f7;padding:14px;margin-top:20px">${escapeHtml_(code)}</div>` : '';
-  return HtmlService.createHtmlOutput(`<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow,noarchive"><title>${escapeHtml_(title)}</title></head><body style="margin:0;background:#fbfcfc;color:#1b2733;font-family:Arial,sans-serif"><main style="max-width:680px;margin:8vh auto;padding:32px"><div style="border-top:4px solid ${success ? '#0e6a6a' : '#9b2c2c'};background:white;padding:34px;box-shadow:0 12px 40px rgba(27,39,51,.08)"><p style="color:#0e6a6a;text-transform:uppercase;letter-spacing:.12em;font-size:12px;font-weight:bold">Harbour Line Advisory</p><h1 style="font-family:Georgia,serif;font-weight:400">${escapeHtml_(title)}</h1><p style="color:#52616f;line-height:1.6">${escapeHtml_(message)}</p>${codeBlock}</div></main></body></html>`);
+function adminPage_(title, message, success) {
+  return HtmlService.createHtmlOutput(`<!doctype html>
+    <html>
+      <head>
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta name="robots" content="noindex,nofollow,noarchive">
+        <title>${escapeHtml_(title)}</title>
+      </head>
+      <body style="margin:0;background:#fbfcfc;color:#1b2733;font-family:Arial,sans-serif">
+        <main style="max-width:680px;margin:8vh auto;padding:32px">
+          <div style="border-top:4px solid ${success ? '#0e6a6a' : '#9b2c2c'};background:white;padding:34px;box-shadow:0 12px 40px rgba(27,39,51,.08)">
+            <p style="color:#0e6a6a;text-transform:uppercase;letter-spacing:.12em;font-size:12px;font-weight:bold">Harbour Line Advisory</p>
+            <h1 style="font-family:Georgia,serif;font-weight:400">${escapeHtml_(title)}</h1>
+            <p style="color:#52616f;line-height:1.6">${escapeHtml_(message)}</p>
+          </div>
+        </main>
+      </body>
+    </html>`);
 }
 
 function CONFIG_TIMEZONE_() {
