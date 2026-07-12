@@ -12,19 +12,29 @@ Static public pages for harbourlineadvisory.com.
 - `_headers` and `robots.txt` — browser and crawler controls
 - `CNAME` — custom domain
 
-## Deliberate exclusions
+## Temporary deployment exception
 
-This repository must not contain:
+`access-system/` contains the staged security revision for the existing Google Apps Script deployment. It remains here only so the owner can copy the revised files into Apps Script and publish a new version.
 
-- Apps Script or other backend source
-- spreadsheet IDs or private record locations
-- Typeform destinations or form identifiers
+While this exception remains:
+
+- new study responses are paused
+- the collaborator invitation tool is closed
+- the source must not contain access codes, administrator tokens or participant records
+
+After the revised deployment passes the recorded access tests, delete `access-system/` from this public repository.
+
+## Private operational material
+
+The public repository must not contain:
+
+- spreadsheet contents or participant records
 - administrator or deployment tokens
 - plain access codes
-- personal contact records
+- personal contact lists
 - confidential client, employer or transaction information
 
-Operational source, deployment instructions, records and credentials are maintained in restricted Google Drive folders.
+Operational records, the governing documents and deployment runbook are maintained in restricted Google Drive folders.
 
 ## Privacy limitation
 
