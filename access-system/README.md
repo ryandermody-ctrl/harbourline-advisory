@@ -18,6 +18,18 @@
 7. Select **New version** and click **Deploy**.
 8. Keep the existing `/exec` URL.
 
+## Approval flow
+
+1. A participant submits their name, organisation and email.
+2. Ryan receives an `ACTION REQUIRED` control email at `ryandermody@gmail.com`.
+3. The email contains only two decisions:
+   - **YES — APPROVE & SEND**
+   - **NO — DECLINE**
+4. Choosing YES immediately emails the participant a private access code and access link from the automated Harbour Line system.
+5. Ryan does not need to copy, forward or send the code manually.
+6. Choosing NO closes the request without sending a code.
+7. Decision links expire after 48 hours and stop working after one use.
+
 ## Typeform hidden fields
 
 Add these hidden fields to the Typeform before testing:
@@ -34,11 +46,18 @@ The approved access link passes both values into Typeform.
 3. Sign in with the passcode emailed by `setup`.
 4. Create one invitation addressed to Ryan.
 5. Send or copy the unique link.
-6. Open the study page and request access.
-7. Approve and send the access code from Ryan's notification email.
-8. Enter the code and open the diagnostic.
-9. Confirm the `Referral Tracking` row records: created, shared, opened, clicked, access requested, approved and form entered.
-10. Confirm the Typeform response contains `request_id` and `referral_id`.
+6. Open the study page and request access using a second email address you can check.
+7. Open the control email delivered to `ryandermody@gmail.com`.
+8. Click **YES — APPROVE & SEND**.
+9. Confirm the participant inbox receives the Harbour Line code automatically.
+10. Enter the code and open the diagnostic.
+11. Confirm the `Referral Tracking` row records: created, shared, opened, clicked, access requested, approved and form entered.
+12. Confirm the Typeform response contains `request_id` and `referral_id`.
+13. Repeat once with **NO — DECLINE** and confirm no code is sent.
+
+## Email identity
+
+The email is automated and uses the display name `Harbour Line Advisory`. Google still sends it through the account that owns the Apps Script. To show a dedicated address such as `access@harbourlineadvisory.com`, configure that address as a verified Gmail send-as alias and update the script after the alias is active.
 
 ## Privacy model
 
