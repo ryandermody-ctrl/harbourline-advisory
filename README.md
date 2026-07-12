@@ -1,21 +1,33 @@
 # Harbour Line Advisory
 
-Minimal static landing page for [harbourlineadvisory.com](https://harbourlineadvisory.com).
+Minimal landing page for [harbourlineadvisory.com](https://harbourlineadvisory.com), with a private Typeform operating brief.
 
 ## Structure
 
 - `index.html` — accessible landing-page markup
 - `styles.css` — core Harbour Line visual system
-- `access.css` — access-dialog styles
-- `script.js` — Typeform routing and access-code check
+- `access.css` — current access-dialog styles
+- `script.js` — current Typeform routing and temporary client-side access gate
 - `favicon.svg` — site icon
 - `CNAME` — GitHub Pages custom domain
+- `access-system/` — Google Apps Script approval backend and branded access portal
+- `docs/ACCESS-CONTROL.md` — deployment, security and operating instructions
 
-## Intake flow
+## Current live flow
 
-The **Start the operating brief** button opens a lightweight access-code dialog and then routes an approved visitor to the Harbour Line Typeform.
+The **Start the operating brief** button currently opens a lightweight access-code dialog and routes an approved visitor to Typeform. This temporary check is client-side and is only intended to discourage casual access.
 
-The access check is client-side and is intended to discourage casual access. It is not server-side authentication and must not be used to protect confidential data.
+## Controlled access flow
+
+The prepared Google Apps Script service replaces the shared password with individual approval:
+
+1. Visitor enters name, organisation and work email.
+2. A unique inactive code is generated.
+3. Ryan receives the request with approve, approve-and-send, and reject controls.
+4. The request is recorded in **HLA Demand Tracker (LIVE) → Access Requests**.
+5. Only an approved email/code combination opens the Typeform.
+
+The access backend must be deployed and authorized by Ryan from the existing Google Sheet. Deployment instructions are in `docs/ACCESS-CONTROL.md`. The live landing-page button should not be switched until the deployed `/exec` URL has been tested.
 
 ## Deployment
 
@@ -23,4 +35,4 @@ GitHub Pages deploys from the root of the `main` branch. Changes committed to `m
 
 ## Data
 
-Raw diagnostic submissions are retained by Typeform. Operating records and qualified-lead tracking are maintained separately in the private Harbour Line Google Drive workspace.
+Typeform retains completed diagnostic submissions. Access requests, approvals and usage are retained in the private Harbour Line Google Sheet. No administrator token or plain per-user access code belongs in the public repository.
