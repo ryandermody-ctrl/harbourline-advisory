@@ -4,7 +4,7 @@
   <base target="_top">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex,nofollow">
+  <meta name="robots" content="noindex,nofollow,noarchive">
   <title>Private access | Harbour Line Advisory</title>
   <style>
     :root {
@@ -12,13 +12,14 @@
       --teal: #0e6a6a;
       --soft: #7fb3b3;
       --slate: #52616f;
-      --mist: #f2f5f7;
       --line: #d8dee4;
       --paper: #fbfcfc;
-      --white: #fff;
+      --white: #ffffff;
       --error: #8f2d2d;
     }
+
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       min-width: 320px;
@@ -27,14 +28,16 @@
       font-family: Arial, Helvetica, sans-serif;
       -webkit-font-smoothing: antialiased;
     }
+
     .shell {
-      width: min(100%, 1120px);
+      width: min(100%, 1080px);
       min-height: 100svh;
       margin: 0 auto;
       padding: clamp(28px, 5vw, 64px) clamp(22px, 6vw, 84px);
       display: flex;
       flex-direction: column;
     }
+
     .brand {
       color: inherit;
       text-decoration: none;
@@ -45,21 +48,23 @@
       padding-bottom: 18px;
       border-bottom: 3px solid var(--navy);
     }
+
     .brand-name {
       font-family: Georgia, "Times New Roman", serif;
       font-weight: 700;
       font-size: clamp(1.6rem, 3vw, 2.5rem);
       letter-spacing: -.035em;
     }
+
     .brand-note {
       color: var(--teal);
       text-transform: uppercase;
       letter-spacing: .08em;
       font-size: .72rem;
       font-weight: 700;
-      text-align: right;
     }
-    .wave {
+
+    .line {
       height: 28px;
       border-top: 2px solid var(--soft);
       border-bottom: 1px solid var(--line);
@@ -67,6 +72,7 @@
       transform: skewY(-.55deg);
       margin-top: 10px;
     }
+
     .content {
       display: grid;
       grid-template-columns: minmax(0, .9fr) minmax(320px, 1.1fr);
@@ -74,6 +80,7 @@
       padding: clamp(64px, 10vh, 120px) 0 70px;
       align-items: start;
     }
+
     .eyebrow {
       color: var(--teal);
       text-transform: uppercase;
@@ -82,33 +89,49 @@
       font-size: .76rem;
       margin: 0 0 18px;
     }
-    h1 {
+
+    h1, h2 {
       font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(2.8rem, 6vw, 5.8rem);
       font-weight: 400;
+      letter-spacing: -.04em;
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 6vw, 5.8rem);
       line-height: .98;
-      letter-spacing: -.05em;
       margin: 0;
     }
-    .intro {
-      color: var(--slate);
-      line-height: 1.65;
-      font-size: 1.04rem;
-      max-width: 520px;
-      margin-top: 28px;
+
+    h2 {
+      font-size: clamp(1.9rem, 3vw, 2.5rem);
+      margin: 0 0 10px;
     }
+
+    .intro, .copy, .privacy, .status {
+      color: var(--slate);
+      line-height: 1.55;
+    }
+
+    .intro {
+      max-width: 500px;
+      margin-top: 28px;
+      font-size: 1.04rem;
+    }
+
     .panel {
       background: var(--white);
       border: 1px solid var(--line);
       box-shadow: 0 18px 48px rgba(27, 39, 51, .08);
       padding: clamp(24px, 4vw, 42px);
     }
+
     .tabs {
       display: grid;
       grid-template-columns: 1fr 1fr;
       border-bottom: 1px solid var(--line);
       margin: -8px 0 30px;
     }
+
     .tab {
       border: 0;
       border-bottom: 3px solid transparent;
@@ -119,29 +142,21 @@
       font-weight: 700;
       cursor: pointer;
     }
+
     .tab[aria-selected="true"] {
       color: var(--navy);
       border-bottom-color: var(--teal);
     }
+
     .pane[hidden] { display: none; }
-    h2 {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(1.9rem, 3vw, 2.5rem);
-      font-weight: 400;
-      margin: 0 0 10px;
-    }
-    .copy {
-      color: var(--slate);
-      line-height: 1.55;
-      margin: 0 0 28px;
-    }
+
     label {
       display: block;
       margin: 18px 0 7px;
       font-size: .84rem;
       font-weight: 700;
-      letter-spacing: .03em;
     }
+
     input {
       width: 100%;
       min-height: 50px;
@@ -152,19 +167,21 @@
       color: var(--navy);
       background: var(--white);
     }
+
     input:focus {
       outline: 3px solid rgba(127, 179, 179, .45);
       border-color: var(--teal);
     }
+
     .honeypot {
       position: absolute !important;
       width: 1px !important;
       height: 1px !important;
       overflow: hidden !important;
       clip: rect(1px, 1px, 1px, 1px) !important;
-      white-space: nowrap !important;
     }
-    button.primary {
+
+    .primary {
       width: 100%;
       min-height: 52px;
       margin-top: 26px;
@@ -176,22 +193,14 @@
       font-weight: 700;
       cursor: pointer;
     }
-    button.primary:hover { background: var(--navy); border-color: var(--navy); }
-    button.primary:disabled { opacity: .55; cursor: wait; }
-    .status {
-      min-height: 24px;
-      margin: 16px 0 0;
-      color: var(--slate);
-      line-height: 1.45;
-      font-size: .9rem;
-    }
+
+    .primary:hover { background: var(--navy); border-color: var(--navy); }
+    .primary:disabled { opacity: .55; cursor: wait; }
+
+    .status { min-height: 24px; margin: 16px 0 0; font-size: .9rem; }
     .status.error { color: var(--error); }
-    .privacy {
-      margin-top: 24px;
-      color: var(--slate);
-      font-size: .78rem;
-      line-height: 1.45;
-    }
+    .privacy { margin-top: 24px; font-size: .78rem; }
+
     footer {
       margin-top: auto;
       padding-top: 20px;
@@ -202,11 +211,10 @@
       gap: 20px;
       font-size: .8rem;
     }
+
     @media (max-width: 780px) {
       .brand { align-items: flex-start; flex-direction: column; gap: 8px; }
-      .brand-note { text-align: left; }
       .content { grid-template-columns: 1fr; padding-top: 56px; }
-      h1 { font-size: clamp(3rem, 15vw, 5rem); }
       footer { flex-direction: column; }
     }
   </style>
@@ -216,16 +224,16 @@
     <header>
       <a class="brand" href="<?= websiteUrl ?>">
         <span class="brand-name">Harbour Line Advisory</span>
-        <span class="brand-note">Private operating brief</span>
+        <span class="brand-note">Private access</span>
       </a>
-      <div class="wave" aria-hidden="true"></div>
+      <div class="line" aria-hidden="true"></div>
     </header>
 
     <section class="content">
       <div>
-        <p class="eyebrow">Selective access</p>
-        <h1>Close to the facts.</h1>
-        <p class="intro">The operating brief is shared with a small number of owners, lenders and investment decision-makers. Access is reviewed personally.</p>
+        <p class="eyebrow">By invitation</p>
+        <h1>Private access.</h1>
+        <p class="intro">Information is shared selectively. Requests are reviewed before access is issued.</p>
       </div>
 
       <div class="panel">
@@ -235,8 +243,8 @@
         </div>
 
         <section class="pane" id="request-pane" role="tabpanel" aria-labelledby="request-tab">
-          <h2>Request private access</h2>
-          <p class="copy">Tell us who you are. Ryan will receive the request with a unique access code and can approve, send or decline it.</p>
+          <h2>Request access</h2>
+          <p class="copy">Provide your details. The request will be reviewed before a code is activated.</p>
           <form id="request-form">
             <label for="name">Name</label>
             <input id="name" name="name" type="text" autocomplete="name" maxlength="120" required>
@@ -244,7 +252,7 @@
             <label for="organisation">Organisation</label>
             <input id="organisation" name="organisation" type="text" autocomplete="organization" maxlength="160" required>
 
-            <label for="email">Work email</label>
+            <label for="email">Email</label>
             <input id="email" name="email" type="email" autocomplete="email" maxlength="254" required>
 
             <div class="honeypot" aria-hidden="true">
@@ -258,8 +266,8 @@
         </section>
 
         <section class="pane" id="code-pane" role="tabpanel" aria-labelledby="code-tab" hidden>
-          <h2>Enter your access code</h2>
-          <p class="copy">Use the same email address that was approved.</p>
+          <h2>Enter your code</h2>
+          <p class="copy">Use the same email address associated with the approved request.</p>
           <form id="code-form">
             <label for="code-email">Approved email</label>
             <input id="code-email" name="email" type="email" autocomplete="email" maxlength="254" required>
@@ -267,18 +275,18 @@
             <label for="access-code">Access code</label>
             <input id="access-code" name="code" type="text" autocomplete="one-time-code" maxlength="80" autocapitalize="characters" required>
 
-            <button class="primary" id="code-submit" type="submit">Open the operating brief</button>
+            <button class="primary" id="code-submit" type="submit">Continue</button>
             <p class="status" id="code-status" role="alert" aria-live="polite"></p>
           </form>
         </section>
 
-        <p class="privacy">The details entered here are used only to manage access, protect the integrity of the diagnostic and follow up on a submitted brief.</p>
+        <p class="privacy">Submitted details are used only to review and manage access.</p>
       </div>
     </section>
 
     <footer>
-      <span>Selective mandates.</span>
-      <span>Access recorded and reviewed.</span>
+      <span>Private.</span>
+      <span>By invitation.</span>
     </footer>
   </main>
 
@@ -336,7 +344,7 @@
       google.script.run
         .withSuccessHandler((result) => {
           if (result.ok) {
-            status.textContent = 'Access confirmed. Opening the brief…';
+            status.textContent = 'Access confirmed.';
             window.location.assign(result.url);
             return;
           }
