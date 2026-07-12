@@ -1,8 +1,8 @@
 const HLA_HOTFIX = Object.freeze({
-  VERSION: '2026-07-12-1',
+  VERSION: '2026-07-12-2',
   FROM_EMAIL: 'info@harbourlineadvisory.com',
   BRAND_NAME: 'Harbour Line Advisory',
-  FORM_VERSION: 'HLA-MKT-2026-07-V2',
+  FORM_VERSION: 'HLA-MKT-2026-07-V3',
 });
 
 function participantSenderOptions_() {
