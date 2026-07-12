@@ -1,6 +1,7 @@
 const PARTICIPANT_EMAIL_CONFIG = Object.freeze({
   FROM_EMAIL: 'info@harbourlineadvisory.com',
   BRAND_NAME: 'Harbour Line Advisory',
+  FORM_VERSION: 'HLA-MKT-2026-07-V2',
 });
 
 function participantSenderOptions_() {
@@ -17,8 +18,6 @@ function participantSenderOptions_() {
     return options;
   }
 
-  // When the Apps Script is owned and executed by the info account,
-  // Gmail naturally uses that primary address without a from override.
   if (effectiveUser === desired) return options;
 
   throw new Error(
@@ -49,8 +48,6 @@ function testParticipantSender() {
   );
 }
 
-// Override the base delivery function so approved participants receive
-// their code directly from the Harbour Line address.
 sendVisitorCode_ = function(email, name, code, referralId) {
   const greeting = name ? 'Hello ' + name + ',' : 'Hello,';
   let portalUrl = ScriptApp.getService().getUrl() + '?tab=code';
@@ -95,9 +92,6 @@ sendVisitorCode_ = function(email, name, code, referralId) {
   );
 };
 
-// Override the base decision handler so the participant email is sent
-// before the request is marked approved. If sender authentication fails,
-// the request stays pending and the YES link remains usable.
 handleAdminDecision_ = function(params) {
   const requestId = clean_(params && params.id, 80);
   const action = clean_(params && params.action, 30).toLowerCase();
@@ -171,7 +165,6 @@ handleAdminDecision_ = function(params) {
       );
     }
 
-    // Deliver first. A sender or delivery failure leaves the request pending.
     sendVisitorCode_(email, name, code, referralId);
 
     sheet.getRange(rowNumber, COL.STATUS).setValue('APPROVED');
@@ -187,6 +180,71 @@ handleAdminDecision_ = function(params) {
       'Harbour Line automatically emailed the access code to ' + email + '.',
       true
     );
+  } finally {
+    lock.releaseLock();
+  }
+};
+
+verifyAccess = function(payload) {
+  const email = normalizeEmail_(payload && payload.email);
+  const code = clean_(payload && payload.code, 80).toUpperCase();
+  const suppliedReferralId = clean_(payload && payload.referralId, 80);
+
+  if (!isValidEmail_(email) || !code) {
+    return { ok: false, message: 'That email and access code combination is not recognised.' };
+  }
+
+  if (isTemporarilyLocked_(email)) {
+    return { ok: false, message: 'Too many unsuccessful attempts. Please try again in 15 minutes.' };
+  }
+
+  const lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+
+  try {
+    const sheet = getAccessSheet_();
+    const rows = sheet.getDataRange().getValues();
+    const now = new Date();
+
+    for (let i = rows.length - 1; i >= 1; i -= 1) {
+      const row = rows[i];
+      if (normalizeEmail_(row[COL.EMAIL - 1]) !== email) continue;
+
+      const status = String(row[COL.STATUS - 1] || '').toUpperCase();
+      const expires = new Date(row[COL.EXPIRES - 1]);
+      const uses = Number(row[COL.USES - 1] || 0);
+      const salt = String(row[COL.SALT - 1] || '');
+      const storedHash = String(row[COL.CODE_HASH - 1] || '');
+
+      if (status !== 'APPROVED' || expires < now || uses >= CONFIG.MAX_USES) continue;
+      if (sha256_(salt + ':' + code) !== storedHash) continue;
+
+      const newUses = uses + 1;
+      sheet.getRange(i + 1, COL.USES).setValue(newUses);
+      sheet.getRange(i + 1, COL.LAST_USED).setValue(now);
+
+      const requestId = String(row[COL.REQUEST_ID - 1] || '');
+      const source = String(row[COL.SOURCE - 1] || '');
+      const sourceReferralId = source.indexOf('Referral:') === 0 ? source.slice(9) : '';
+      const referralId = suppliedReferralId || sourceReferralId;
+
+      if (newUses >= CONFIG.MAX_USES) {
+        sheet.getRange(i + 1, COL.STATUS).setValue('USED');
+        PropertiesService.getScriptProperties().deleteProperty('CODE_' + requestId);
+      }
+
+      if (referralId) markReferralFormEntered_(referralId, requestId, email);
+      clearFailedAttempts_(email);
+
+      const url = CONFIG.TYPEFORM_URL
+        + '#request_id=' + encodeURIComponent(requestId)
+        + '&form_version=' + encodeURIComponent(PARTICIPANT_EMAIL_CONFIG.FORM_VERSION);
+
+      return { ok: true, url };
+    }
+
+    recordFailedAttempt_(email);
+    return { ok: false, message: 'That email and access code combination is not recognised.' };
   } finally {
     lock.releaseLock();
   }
