@@ -1,0 +1,238 @@
+:root {
+  --navy: #1b2733;
+  --teal: #0e6a6a;
+  --teal-soft: #7fb3b3;
+  --slate: #52616f;
+  --mist: #f2f5f7;
+  --line: #d8dee4;
+  --paper: #fbfcfc;
+  --white: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  color: var(--navy);
+  background: var(--paper);
+  font-family: Arial, Helvetica, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  color: var(--white);
+  background: var(--teal);
+}
+
+.page-shell {
+  min-height: 100svh;
+  width: min(100%, 1500px);
+  margin: 0 auto;
+  padding: clamp(28px, 4vw, 64px) clamp(24px, 7vw, 112px) 28px;
+  display: flex;
+  flex-direction: column;
+}
+
+.site-header {
+  width: 100%;
+}
+
+.brand {
+  color: inherit;
+  text-decoration: none;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 32px;
+  padding-bottom: 18px;
+  border-bottom: 3px solid var(--navy);
+}
+
+.brand-name {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.65rem, 3vw, 2.85rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+
+.brand-descriptor {
+  color: var(--teal);
+  font-size: clamp(0.7rem, 1.1vw, 0.95rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: right;
+}
+
+.harbour-line {
+  height: 32px;
+  overflow: hidden;
+}
+
+.harbour-line svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.wave {
+  fill: none;
+  stroke-linecap: round;
+  stroke-width: 2.2;
+}
+
+.wave-primary {
+  stroke: var(--teal-soft);
+}
+
+.wave-secondary {
+  stroke: var(--line);
+}
+
+.hero {
+  max-width: 980px;
+  padding: clamp(80px, 14vh, 150px) 0 clamp(70px, 12vh, 130px);
+}
+
+.eyebrow {
+  margin: 0 0 22px;
+  color: var(--teal);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+  max-width: 980px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(3.25rem, 8.5vw, 8rem);
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+.subhead {
+  max-width: 720px;
+  margin: clamp(28px, 4vw, 44px) 0 0;
+  color: var(--slate);
+  font-size: clamp(1.05rem, 1.8vw, 1.45rem);
+  line-height: 1.55;
+}
+
+.actions {
+  margin-top: clamp(34px, 5vw, 54px);
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.primary-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 54px;
+  padding: 0 28px;
+  color: var(--white);
+  background: var(--teal);
+  border: 1px solid var(--teal);
+  border-radius: 2px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: transform 160ms ease, background-color 160ms ease, border-color 160ms ease;
+}
+
+.primary-action:hover {
+  background: var(--navy);
+  border-color: var(--navy);
+  transform: translateY(-2px);
+}
+
+.primary-action:focus-visible {
+  outline: 3px solid var(--teal-soft);
+  outline-offset: 4px;
+}
+
+.typeform-note {
+  margin: 0;
+  color: var(--slate);
+  font-size: 0.9rem;
+}
+
+.typeform-placeholder {
+  display: none;
+}
+
+.site-footer {
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  color: var(--slate);
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  font-size: 0.82rem;
+  letter-spacing: 0.03em;
+}
+
+@media (max-width: 760px) {
+  .page-shell {
+    padding: 24px 22px 22px;
+  }
+
+  .brand {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+    padding-bottom: 14px;
+  }
+
+  .brand-descriptor {
+    text-align: left;
+  }
+
+  .hero {
+    padding: 68px 0 76px;
+  }
+
+  h1 {
+    font-size: clamp(3.05rem, 15vw, 5.4rem);
+    line-height: 1;
+  }
+
+  .subhead {
+    font-size: 1.04rem;
+  }
+
+  .actions {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .primary-action {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .primary-action {
+    transition: none;
+  }
+}
