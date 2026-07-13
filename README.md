@@ -13,7 +13,8 @@ The active research path is deliberately simple:
 1. `harbourlineadvisory.com/study/`
 2. Harbour Line Model Coherence Study in Typeform
 3. Typeform's native Google Sheets integration
-4. `HLA Demand Tracker (LIVE)` for analysis and outreach records
+4. Raw response tab in `HLA Demand Tracker (LIVE)`
+5. Formula-mapped `V3 Analysis` for coding and interpretation
 
 Live Typeform:
 
@@ -31,11 +32,9 @@ The participant path does not use an access code, Apps Script approval, a collab
 - `_headers` and `robots.txt` — browser and crawler controls
 - `CNAME` — custom-domain record retained for compatibility
 
-## Retired access system
+## Retired system cleanup
 
-`access-system/` is retained only as a historical technical record. It is not part of the active participant journey and should not be deployed as the current Harbour Line study architecture.
-
-The files may contain superseded process language and old form references. The governing source for the live study is the current Typeform URL above and the current documents in Google Drive.
+The superseded `access-system/` source and access-control documentation have been removed from the active repository tree. Git history and the archived Google Drive runbook preserve the historical technical record.
 
 ## Private operational material
 
