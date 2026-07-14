@@ -8,27 +8,33 @@ GitHub is the source repository. Cloudflare is the public deployment and domain 
 
 ## Current release state
 
-Study intake is paused while single-use permission control is implemented and tested.
+Public participant applications are open. The research assessment itself remains paused while single-use permission control is implemented and tested.
 
-The required participant path is:
+The participant path is:
 
 1. `harbourlineadvisory.com/study/`
-2. individually issued permission and passcode
-3. backend claim that atomically binds the permission to one assessment session
-4. Harbour Line Model Coherence Study in Typeform (`Jh4G63Se`) with a non-sensitive `permission_id` URL parameter
-5. Typeform's native Google Sheets integration
-6. raw response tab in `HLA Demand Tracker (LIVE)`
-7. validation against the Permission Control register
-8. formula-mapped `V3 Analysis`, accepting only the first valid completion for each permission
+2. `harbourlineadvisory.com/apply/` for a short qualification application
+3. application delivered to `info@harbourlineadvisory.com` and recorded separately in the controlled Participant Applications register
+4. Harbour Line review and selection
+5. individually issued permission and passcode
+6. backend claim that atomically binds the permission to one assessment session
+7. Harbour Line Model Coherence Study in Typeform (`Jh4G63Se`) with a non-sensitive `permission_id` URL parameter
+8. Typeform's native Google Sheets integration
+9. raw response tab in `HLA Demand Tracker (LIVE)`
+10. validation against the Permission Control register
+11. formula-mapped `V3 Analysis`, accepting only the first valid completion for each permission
 
-The same incomplete session may be resumed. A completed or already claimed permission must not create another assessment session or accepted response. A repeat assessment requires a newly issued permission.
+Application information is recruitment and communication data. It is not research evidence and must remain separate from assessment responses.
+
+The same incomplete assessment session may be resumed. A completed or already claimed permission must not create another assessment session or accepted response. A repeat assessment requires a newly issued permission.
 
 The direct Typeform URL must not be distributed while this control remains on release hold.
 
 ## Current public scope
 
 - `index.html` — Harbour Line landing page
-- `study/` — Model Coherence Study explanation; direct intake paused
+- `study/` — Model Coherence Study explanation and application entry point
+- `apply/` — participant qualification application; prepares a structured email to Harbour Line and does not grant assessment access
 - `send/` — retirement notice for the former collaborator console
 - `styles.css` — public visual system
 - `favicon.svg` — site icon
@@ -40,6 +46,8 @@ The direct Typeform URL must not be distributed while this control remains on re
 The public repository contains no passcodes, participant records, spreadsheet data, administrator tokens or backend deployment credentials.
 
 The restricted implementation and audit records belong in the controlled Google Drive environment and the bound Apps Script project. The backend must enforce atomic claim, session binding, completion state, reuse denial, rate limiting and audit logging. Browser-only enforcement is not sufficient.
+
+The public application page does not write applicant details into GitHub or the research-response store. It prepares an email in the applicant's own email client. Applicant records are reviewed and logged separately.
 
 ## Private operational material
 
@@ -55,4 +63,4 @@ Operational records, research standards and release notes are maintained in rest
 
 ## Privacy limitation
 
-The public pages are instructed not to appear in search results, but anyone with an exact address may open them. Permission identifiers passed to Typeform must be non-sensitive internal identifiers, not names, email addresses, passwords or authentication secrets. Invitation records remain separate from response analysis.
+The public pages are instructed not to appear in search results, but anyone with an exact address may open them. Permission identifiers passed to Typeform must be non-sensitive internal identifiers, not names, email addresses, passwords or authentication secrets. Application and invitation records remain separate from response analysis.
