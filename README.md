@@ -4,63 +4,53 @@ Static public pages for harbourlineadvisory.com.
 
 ## Hosting and deployment
 
-GitHub is the source repository. Cloudflare is the public deployment and domain layer. Changes committed to `main` are detected by Cloudflare and published to the live site.
+GitHub is the source repository. Cloudflare is the public deployment and domain layer. The live site must remain informational while the V4 participant and assessment platform is built and tested separately.
 
 ## Current release state
 
-Public participant applications are open. The research assessment itself remains paused while single-use permission control is implemented and tested.
+**Assessment release is paused.**
 
-The participant path is:
+The previous Typeform and Apps Script transaction path has failed systems-architecture review and is now legacy evidence only. Do not distribute a direct Typeform URL, issue new assessment permissions or restore the archived Apps Script web app.
+
+The public participant path currently stops at:
 
 1. `harbourlineadvisory.com/study/`
 2. `harbourlineadvisory.com/apply/` for a short qualification application
-3. application delivered to `info@harbourlineadvisory.com` and recorded separately in the controlled Participant Applications register
-4. Harbour Line review and selection
-5. individually issued permission and passcode
-6. backend claim that atomically binds the permission to one assessment session
-7. Harbour Line Model Coherence Study in Typeform (`Jh4G63Se`) with a non-sensitive `permission_id` URL parameter
-8. Typeform's native Google Sheets integration
-9. raw response tab in `HLA Demand Tracker (LIVE)`
-10. validation against the Permission Control register
-11. formula-mapped `V3 Analysis`, accepting only the first valid completion for each permission
+3. Harbour Line review and selection
 
-Application information is recruitment and communication data. It is not research evidence and must remain separate from assessment responses.
+The present application page prepares an email in the applicant's own email client. It is a temporary recruitment route, not the V4 system of record. Applying does not create an assessment record or grant study access.
 
-The same incomplete assessment session may be resumed. A completed or already claimed permission must not create another assessment session or accepted response. A repeat assessment requires a newly issued permission.
+## Approved V4 boundary
 
-The direct Typeform URL must not be distributed while this control remains on release hold.
+The replacement platform will use:
+
+- Cloudflare Pages for public content and questionnaire UI
+- a Cloudflare Worker for public API requests
+- a Durable Object for serialized single-use permission and session state
+- D1 for canonical applications, sessions, responses and audit events
+- server-validated Turnstile on public submissions
+- an idempotent queue-backed mirror into controlled Google Sheets
+- private Apps Script utilities only; no anonymous Google-owner authentication web app
+
+Google Sheets remains the controlled analysis and reporting surface. It is not the V4 transaction authority. The legacy Typeform raw tab remains immutable historical data.
 
 ## Current public scope
 
 - `index.html` — Harbour Line landing page
 - `study/` — Model Coherence Study explanation and application entry point
-- `apply/` — participant qualification application; prepares a structured email to Harbour Line and does not grant assessment access
+- `apply/` — temporary participant qualification application; prepares an email and does not grant assessment access
 - `send/` — retirement notice for the former collaborator console
 - `styles.css` — public visual system
 - `favicon.svg` — site icon
 - `_headers` and `robots.txt` — browser and crawler controls
 - `CNAME` — custom-domain record retained for compatibility
 
-## Access-control implementation boundary
+## Public repository boundary
 
-The public repository contains no passcodes, participant records, spreadsheet data, administrator tokens or backend deployment credentials.
+This repository must contain no passcodes, participant records, spreadsheet data, administrator tokens, backend credentials, personal contact lists or confidential client, employer or transaction information.
 
-The restricted implementation and audit records belong in the controlled Google Drive environment and the bound Apps Script project. The backend must enforce atomic claim, session binding, completion state, reuse denial, rate limiting and audit logging. Browser-only enforcement is not sufficient.
+The governing systems architecture, schemas, audit records and deployment controls are maintained in the private `harbourline-automation-private` repository and restricted Google records.
 
-The public application page does not write applicant details into GitHub or the research-response store. It prepares an email in the applicant's own email client. Applicant records are reviewed and logged separately.
+## Release rule
 
-## Private operational material
-
-The public repository must not contain:
-
-- spreadsheet contents or participant records
-- administrator or deployment tokens
-- plain access codes
-- personal contact lists
-- confidential client, employer or transaction information
-
-Operational records, research standards and release notes are maintained in restricted Google Drive files.
-
-## Privacy limitation
-
-The public pages are instructed not to appear in search results, but anyone with an exact address may open them. Permission identifiers passed to Typeform must be non-sensitive internal identifiers, not names, email addresses, passwords or authentication secrets. Application and invitation records remain separate from response analysis.
+A material change to authentication, data, questionnaire semantics, routing, integrations, security headers or deployment must pass a systems-architecture review, staging tests, documented rollback and explicit owner approval before production publication.
