@@ -1,0 +1,3 @@
+/apply https://hla-v4-beta-pages.pages.dev/application/ 302
+/apply/ https://hla-v4-beta-pages.pages.dev/application/ 302
+/apply/* https://hla-v4-beta-pages.pages.dev/application/:splat 302
