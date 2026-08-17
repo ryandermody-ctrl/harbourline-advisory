@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 300" role="img" aria-labelledby="title desc">
+  <title id="title">Harbour Line crane and ship mark</title>
+  <desc id="desc">Fine line drawing of a harbour crane above a cargo vessel.</desc>
+  <g fill="none" stroke="#173656" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M82 239H878" opacity=".36"/>
+    <path d="M118 257c70-15 134-15 204 0s134 15 204 0 134-15 204 0 88 12 130 2" stroke-width="3" opacity=".55"/>
+    <path d="M154 224V47h29v177M138 224h63M154 76h29M146 224l37-82M191 224l-37-82"/>
+    <path d="M168 47h399M183 66h318M183 47l38 19M221 47l38 19M259 47l38 19M297 47l38 19M335 47l38 19M373 47l38 19M411 47l38 19M449 47l38 19M487 47l38 19" stroke-width="3.5"/>
+    <path d="M567 47l-66 19M503 66l64 18"/>
+    <path d="M486 66v75M473 141h26M486 141v21M477 162q9 18 18 0" stroke-width="3.5"/>
+    <path d="M274 170h486l-42 54H320l-46-54Z"/>
+    <path d="M315 170l21-30h57v30M393 170v-30h64v30M457 170v-30h64v30M521 170v-30h64v30" stroke-width="4"/>
+    <path d="M604 170v-55h92l32 55M628 115V91h31v24M642 91V77M642 77h29"/>
+    <path d="M620 137h23M653 137h23" stroke-width="3.5"/>
+    <path d="M320 194h385M349 210h321" stroke-width="3" opacity=".7"/>
+  </g>
+  <path d="M315 170l21-30h57v30" fill="none" stroke="#A25E46" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
